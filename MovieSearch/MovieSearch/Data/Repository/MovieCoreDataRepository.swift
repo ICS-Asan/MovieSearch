@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 
-final class MovieCoreDataRepository {
+final class MovieCoreDataRepository: CoreDataRepository {
     func fetch() -> Observable<[Movie]> {
         return .empty()
     }

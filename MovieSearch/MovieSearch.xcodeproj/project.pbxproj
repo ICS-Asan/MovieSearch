@@ -42,6 +42,7 @@
 		479CD1DC2869FDE300ABD0AB /* CellReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1DB2869FDE300ABD0AB /* CellReusable.swift */; };
 		47EE0DEC286A62C700846EE9 /* MovieCoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DEB286A62C700846EE9 /* MovieCoreDataRepository.swift */; };
 		47EE0DEE286A634500846EE9 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DED286A634500846EE9 /* CoreDataRepository.swift */; };
+		47EE0DF0286A63D500846EE9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DEF286A63D500846EE9 /* CoreDataManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +79,7 @@
 		479CD1DB2869FDE300ABD0AB /* CellReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellReusable.swift; sourceTree = "<group>"; };
 		47EE0DEB286A62C700846EE9 /* MovieCoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCoreDataRepository.swift; sourceTree = "<group>"; };
 		47EE0DED286A634500846EE9 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
+		47EE0DEF286A63D500846EE9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				47895B9C286A4DFD0031DD91 /* MovieCoreDataDTO+CoreDataClass.swift */,
 				47895B9D286A4DFD0031DD91 /* MovieCoreDataDTO+CoreDataProperties.swift */,
 				47895B99286A4D0C0031DD91 /* MovieCoreDataDTO.xcdatamodeld */,
+				47EE0DEF286A63D500846EE9 /* CoreDataManager.swift */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				479CD1AE28698D9D00ABD0AB /* EndPoint.swift in Sources */,
 				479CD1B32869966E00ABD0AB /* MovieDTO.swift in Sources */,
 				479CD1B92869974400ABD0AB /* Movie.swift in Sources */,
+				47EE0DF0286A63D500846EE9 /* CoreDataManager.swift in Sources */,
 				47EE0DEC286A62C700846EE9 /* MovieCoreDataRepository.swift in Sources */,
 				479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */,
 				479CD1BE28699A2800ABD0AB /* URLRequest+extension.swift in Sources */,
