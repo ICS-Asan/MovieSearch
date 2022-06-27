@@ -25,7 +25,7 @@ final class MovieCell: UICollectionViewCell {
     private func setupContainerViewLayout() {
         contentView.addSubview(containerView)
         containerView.snp.makeConstraints { make in
-            make.edges.width.height.equalToSuperview()
+            make.edges.equalToSuperview().inset(10)
         }
     }
 }
