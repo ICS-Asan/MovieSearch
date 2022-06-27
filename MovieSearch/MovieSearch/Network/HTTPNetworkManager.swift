@@ -27,15 +27,14 @@ final class HTTPNetworkManager {
     }
     
     func fetch(with endPoint: URL?) -> Observable<Data> {
-        guard let endPoint = endPoint else {
-            return .error(fatalError())
+        guard let urlRequest = createURLRequest(with: endPoint) else {
+            return .error(HTTPNetworkError.invalidEndPoint)
         }
 
         return Observable.create() { [weak self] emitter in
-            let urlRequest = URLRequest(url: endPoint, method: .get)
             let task = self?.urlSession.dataTask(with: urlRequest) { (data, response , error) in
                 guard error == nil else {
-                    emitter.onError(fatalError())
+                    emitter.onError(HTTPNetworkError.invalidRequest)
                     return
                 }
 
