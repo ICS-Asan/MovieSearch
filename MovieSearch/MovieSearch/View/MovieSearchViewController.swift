@@ -36,12 +36,13 @@ class MovieSearchViewController: UIViewController {
         return searchController
     }()
     
-    private let movieCollectionView = UICollectionView(frame: .zero)
+    private var movieCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        setupHomeCollectionView()
     }
     
     private func setupNavigationBar() {
@@ -49,11 +50,19 @@ class MovieSearchViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
         navigationItem.searchController = searchController
     }
+    
+    private func populate(movie: [Movie]?) {
+        guard let movie = movie else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
+        snapshot.appendSections([.list])
+        snapshot.appendItems(movie, toSection: .list)
+        dataSource?.apply(snapshot)
+    }
 }
 
 extension MovieSearchViewController {
     private func setupHomeCollectionView() {
-        movieCollectionView.collectionViewLayout = createCollectionViewLayout()
+        movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         registerCollectionViewCell()
         setupCollectionViewDataSource()
         setupCollectionViewConstraints()
@@ -101,4 +110,3 @@ extension MovieSearchViewController {
         }
     }
 }
-
