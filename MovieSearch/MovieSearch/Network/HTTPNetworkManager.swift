@@ -13,8 +13,14 @@ final class HTTPNetworkManager {
             return nil
         }
         var urlRequest = URLRequest(url: endPoint, method: .get)
-        urlRequest.setValue("X-Naver-Client-Id", forHTTPHeaderField: "xIDxQUaIwFGS6sVcbAyN")
-        urlRequest.addValue("X-Naver-Client-Secret", forHTTPHeaderField: "mJPepkAAi3")
+        urlRequest.setValue(
+            ClientInformation.ID.key,
+            forHTTPHeaderField: ClientInformation.ID.value
+        )
+        urlRequest.addValue(
+            ClientInformation.Secret.key,
+            forHTTPHeaderField: ClientInformation.Secret.value
+        )
         
         return urlRequest
     }
