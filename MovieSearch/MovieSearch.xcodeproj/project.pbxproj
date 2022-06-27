@@ -40,6 +40,8 @@
 		479CD1D72869CF1200ABD0AB /* UIFont+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */; };
 		479CD1D92869D25200ABD0AB /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1D82869D25200ABD0AB /* MovieCell.swift */; };
 		479CD1DC2869FDE300ABD0AB /* CellReusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1DB2869FDE300ABD0AB /* CellReusable.swift */; };
+		47EE0DEC286A62C700846EE9 /* MovieCoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DEB286A62C700846EE9 /* MovieCoreDataRepository.swift */; };
+		47EE0DEE286A634500846EE9 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DED286A634500846EE9 /* CoreDataRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +76,8 @@
 		479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+extension.swift"; sourceTree = "<group>"; };
 		479CD1D82869D25200ABD0AB /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 		479CD1DB2869FDE300ABD0AB /* CellReusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellReusable.swift; sourceTree = "<group>"; };
+		47EE0DEB286A62C700846EE9 /* MovieCoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCoreDataRepository.swift; sourceTree = "<group>"; };
+		47EE0DED286A634500846EE9 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -231,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				479CD1C82869A33200ABD0AB /* MovieNetworkRepository.swift */,
+				47EE0DEB286A62C700846EE9 /* MovieCoreDataRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -239,6 +244,7 @@
 			isa = PBXGroup;
 			children = (
 				479CD1CB2869A89B00ABD0AB /* NetworkRepository.swift */,
+				47EE0DED286A634500846EE9 /* CoreDataRepository.swift */,
 			);
 			path = Protocol;
 			sourceTree = "<group>";
@@ -361,6 +367,7 @@
 				477A76E2286A20210028A292 /* ViewModelDescribing.swift in Sources */,
 				479CD1D92869D25200ABD0AB /* MovieCell.swift in Sources */,
 				47895B93286A37140031DD91 /* MovieDetailViewController.swift in Sources */,
+				47EE0DEE286A634500846EE9 /* CoreDataRepository.swift in Sources */,
 				479CD1C228699E7C00ABD0AB /* HTTPNetworkError.swift in Sources */,
 				479CD1CC2869A89B00ABD0AB /* NetworkRepository.swift in Sources */,
 				479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */,
@@ -379,6 +386,7 @@
 				479CD1AE28698D9D00ABD0AB /* EndPoint.swift in Sources */,
 				479CD1B32869966E00ABD0AB /* MovieDTO.swift in Sources */,
 				479CD1B92869974400ABD0AB /* Movie.swift in Sources */,
+				47EE0DEC286A62C700846EE9 /* MovieCoreDataRepository.swift in Sources */,
 				479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */,
 				479CD1BE28699A2800ABD0AB /* URLRequest+extension.swift in Sources */,
 			);
