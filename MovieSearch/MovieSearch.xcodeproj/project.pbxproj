@@ -58,15 +58,31 @@
 		479CD192286985EA00ABD0AB /* MovieSearch */ = {
 			isa = PBXGroup;
 			children = (
-				479CD193286985EA00ABD0AB /* AppDelegate.swift */,
-				479CD195286985EA00ABD0AB /* SceneDelegate.swift */,
+				479CD1AA28698C6B00ABD0AB /* Application */,
 				479CD197286985EA00ABD0AB /* ViewController.swift */,
 				479CD199286985EA00ABD0AB /* Main.storyboard */,
-				479CD19C286985EA00ABD0AB /* Assets.xcassets */,
 				479CD19E286985EA00ABD0AB /* LaunchScreen.storyboard */,
-				479CD1A1286985EA00ABD0AB /* Info.plist */,
+				479CD1AB28698C8A00ABD0AB /* Resources */,
 			);
 			path = MovieSearch;
+			sourceTree = "<group>";
+		};
+		479CD1AA28698C6B00ABD0AB /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				479CD193286985EA00ABD0AB /* AppDelegate.swift */,
+				479CD195286985EA00ABD0AB /* SceneDelegate.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		479CD1AB28698C8A00ABD0AB /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				479CD19C286985EA00ABD0AB /* Assets.xcassets */,
+				479CD1A1286985EA00ABD0AB /* Info.plist */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,7 +315,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3P8RM8472L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieSearch/Info.plist;
+				INFOPLIST_FILE = MovieSearch/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -327,7 +343,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 3P8RM8472L;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MovieSearch/Info.plist;
+				INFOPLIST_FILE = MovieSearch/Resources/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
