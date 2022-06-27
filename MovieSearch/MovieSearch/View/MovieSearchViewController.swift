@@ -37,6 +37,7 @@ class MovieSearchViewController: UIViewController {
     }()
     
     private let movieCollectionView = UICollectionView(frame: .zero)
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -53,6 +54,9 @@ class MovieSearchViewController: UIViewController {
 extension MovieSearchViewController {
     private func setupHomeCollectionView() {
         movieCollectionView.collectionViewLayout = createCollectionViewLayout()
+        registerCollectionViewCell()
+        setupCollectionViewDataSource()
+        setupCollectionViewConstraints()
     }
     
     private func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -73,6 +77,28 @@ extension MovieSearchViewController {
         let section = NSCollectionLayoutSection(group: group)
         
         return section
+    }
+    
+    private func registerCollectionViewCell() {
+        movieCollectionView.register(MovieCell.self)
+    }
+    
+    private func setupCollectionViewDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: movieCollectionView) { collectionView, indexPath, item in
+            guard let cell = collectionView.dequeueReusableCell(MovieCell.self, for: indexPath) else {
+                return UICollectionViewCell()
+            }
+            cell.setupCell(with: item)
+            return cell
+        }
+        movieCollectionView.dataSource = dataSource
+    }
+    
+    private func setupCollectionViewConstraints() {
+        view.addSubview(movieCollectionView)
+        movieCollectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 }
 

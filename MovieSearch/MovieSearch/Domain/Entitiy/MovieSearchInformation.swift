@@ -1,6 +1,6 @@
 import Foundation
 
-struct MovieSearchInformation {
+struct MovieSearchInformation: Hashable {
     let lastBuildDate: String
     let total: Int
     let start: Int
