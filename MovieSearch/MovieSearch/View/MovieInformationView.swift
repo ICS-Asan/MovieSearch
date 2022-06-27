@@ -3,7 +3,11 @@ import SnapKit
 import SDWebImage
 
 final class MovieInformationView: UIView {
-    
+    var changeBookmarkState: (() -> Void)?
+    private var isBookmarked: Bool {
+        return bookmarkButton.tintColor == .systemYellow
+    }
+
     private let posterImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         
@@ -71,6 +75,7 @@ final class MovieInformationView: UIView {
         setupDirectorLabel(with: movie.director)
         setupActorLabel(with: movie.actor)
         setupUserRatingLable(with: movie.userRating)
+        setupBookmarkButtonColor(with: movie.isBookmarked)
     }
     
     private func setupPosterImageView(url: String) {
@@ -93,10 +98,23 @@ final class MovieInformationView: UIView {
         userRatingLabel.text = "평점: " + userRating
     }
     
+    private func setupBookmarkButtonColor(with isBookmarked: Bool) {
+        if isBookmarked {
+            bookmarkButton.tintColor = .systemYellow
+        } else {
+            bookmarkButton.tintColor = .secondarySystemBackground
+        }
+    }
+    
+    
     private func commonInit() {
         setupPosterImageViewLayout()
         setupTextInformationStackView()
         setupBookmarkButtonLayout()
+    }
+    
+    private func setupBookmarkButtonAction() {
+        bookmarkButton.addTarget(self, action: #selector(didTabBookmarkButton), for: .touchDown)
     }
     
     private func setupPosterImageViewLayout() {
@@ -131,5 +149,10 @@ final class MovieInformationView: UIView {
         bookmarkButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview().inset(5)
         }
+    }
+    
+    @objc private func didTabBookmarkButton() {
+        changeBookmarkState?()
+        setupBookmarkButtonColor(with: !isBookmarked)
     }
 }

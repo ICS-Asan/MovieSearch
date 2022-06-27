@@ -2,6 +2,7 @@ import UIKit
 
 final class MovieCell: UICollectionViewCell {
     let containerView = MovieInformationView()
+    var changeFavoriteState: (() -> Void)?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
