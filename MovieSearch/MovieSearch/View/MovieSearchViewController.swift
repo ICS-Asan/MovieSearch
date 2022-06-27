@@ -1,7 +1,7 @@
 import UIKit
 
 class MovieSearchViewController: UIViewController {
-    let viewTitleLable: UILabel = {
+    private let viewTitleLable: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title2).bold
         label.text =  "네이버 영화 검색"
@@ -9,7 +9,7 @@ class MovieSearchViewController: UIViewController {
         return label
     }()
     
-    let bookmarkButton: UIButton = {
+    private let bookmarkButton: UIButton = {
         let button = UIButton()
         button.setTitle("즐겨찾기", for: .normal)
         button.setTitleColor(.label, for: .normal)
@@ -22,6 +22,17 @@ class MovieSearchViewController: UIViewController {
         return button
     }()
     
+    private let searchController: UISearchController = {
+        let searchController = UISearchController()
+        searchController.hidesNavigationBarDuringPresentation = false
+        searchController.searchBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
+        searchController.searchBar.barTintColor = .systemBackground
+        searchController.searchBar.searchTextField.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        searchController.searchBar.searchTextField.layer.borderWidth = 1
+        
+        return searchController
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -30,6 +41,6 @@ class MovieSearchViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: viewTitleLable)
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
+        navigationItem.searchController = searchController
     }
-    
 }
