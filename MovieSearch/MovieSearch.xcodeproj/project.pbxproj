@@ -15,6 +15,8 @@
 		479CD1A0286985EA00ABD0AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 479CD19E286985EA00ABD0AB /* LaunchScreen.storyboard */; };
 		479CD1A92869872900ABD0AB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 479CD1A82869872900ABD0AB /* RxSwift */; };
 		479CD1AE28698D9D00ABD0AB /* EndPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1AD28698D9D00ABD0AB /* EndPoint.swift */; };
+		479CD1B12869965E00ABD0AB /* MovieSearhInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1B02869965E00ABD0AB /* MovieSearhInformationDTO.swift */; };
+		479CD1B32869966E00ABD0AB /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1B22869966E00ABD0AB /* MovieDTO.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		479CD19F286985EA00ABD0AB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		479CD1A1286985EA00ABD0AB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		479CD1AD28698D9D00ABD0AB /* EndPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndPoint.swift; sourceTree = "<group>"; };
+		479CD1B02869965E00ABD0AB /* MovieSearhInformationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearhInformationDTO.swift; sourceTree = "<group>"; };
+		479CD1B22869966E00ABD0AB /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,8 +96,18 @@
 			isa = PBXGroup;
 			children = (
 				479CD1AD28698D9D00ABD0AB /* EndPoint.swift */,
+				479CD1AF286995FD00ABD0AB /* NetworkDTO */,
 			);
 			path = Network;
+			sourceTree = "<group>";
+		};
+		479CD1AF286995FD00ABD0AB /* NetworkDTO */ = {
+			isa = PBXGroup;
+			children = (
+				479CD1B02869965E00ABD0AB /* MovieSearhInformationDTO.swift */,
+				479CD1B22869966E00ABD0AB /* MovieDTO.swift */,
+			);
+			path = NetworkDTO;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -174,8 +188,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				479CD198286985EA00ABD0AB /* ViewController.swift in Sources */,
+				479CD1B12869965E00ABD0AB /* MovieSearhInformationDTO.swift in Sources */,
 				479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */,
 				479CD1AE28698D9D00ABD0AB /* EndPoint.swift in Sources */,
+				479CD1B32869966E00ABD0AB /* MovieDTO.swift in Sources */,
 				479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
