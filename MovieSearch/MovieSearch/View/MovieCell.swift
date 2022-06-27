@@ -12,7 +12,7 @@ final class MovieCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title3)
+        label.font = .preferredFont(forTextStyle: .title3).bold
         
         return label
     }()

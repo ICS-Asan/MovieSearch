@@ -29,6 +29,7 @@
 		479CD1CF2869C19700ABD0AB /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1CE2869C19700ABD0AB /* MovieCell.swift */; };
 		479CD1D22869C27400ABD0AB /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 479CD1D12869C27400ABD0AB /* SDWebImage */; };
 		479CD1D52869C29F00ABD0AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 479CD1D42869C29F00ABD0AB /* SnapKit */; };
+		479CD1D72869CF1200ABD0AB /* UIFont+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +54,7 @@
 		479CD1C82869A33200ABD0AB /* MovieNetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNetworkRepository.swift; sourceTree = "<group>"; };
 		479CD1CB2869A89B00ABD0AB /* NetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepository.swift; sourceTree = "<group>"; };
 		479CD1CE2869C19700ABD0AB /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */,
+				479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 				479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */,
 				479CD1B72869973A00ABD0AB /* MovieSearchInformation.swift in Sources */,
 				479CD1C52869A09900ABD0AB /* JSONParser.swift in Sources */,
+				479CD1D72869CF1200ABD0AB /* UIFont+extension.swift in Sources */,
 				479CD1B12869965E00ABD0AB /* MovieSearhInformationDTO.swift in Sources */,
 				479CD1C028699CB700ABD0AB /* ClientInformation.swift in Sources */,
 				479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */,
