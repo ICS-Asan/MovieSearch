@@ -11,6 +11,8 @@
 		477A76E0286A17630028A292 /* MovieSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76DF286A17630028A292 /* MovieSearchViewModel.swift */; };
 		477A76E2286A20210028A292 /* ViewModelDescribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76E1286A20210028A292 /* ViewModelDescribing.swift */; };
 		477A76E8286A224C0028A292 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 477A76E7286A224C0028A292 /* RxCocoa */; };
+		47895B93286A37140031DD91 /* MovieDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47895B92286A37140031DD91 /* MovieDetailViewController.swift */; };
+		47895B96286A411C0031DD91 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 47895B95286A411C0031DD91 /* WebKit.framework */; };
 		479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD193286985EA00ABD0AB /* AppDelegate.swift */; };
 		479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD195286985EA00ABD0AB /* SceneDelegate.swift */; };
 		479CD198286985EA00ABD0AB /* MovieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */; };
@@ -41,6 +43,8 @@
 		477A76DD286A13740028A292 /* MovieSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchUseCase.swift; sourceTree = "<group>"; };
 		477A76DF286A17630028A292 /* MovieSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchViewModel.swift; sourceTree = "<group>"; };
 		477A76E1286A20210028A292 /* ViewModelDescribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDescribing.swift; sourceTree = "<group>"; };
+		47895B92286A37140031DD91 /* MovieDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDetailViewController.swift; sourceTree = "<group>"; };
+		47895B95286A411C0031DD91 /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		479CD190286985EA00ABD0AB /* MovieSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		479CD193286985EA00ABD0AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		479CD195286985EA00ABD0AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -71,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				47895B96286A411C0031DD91 /* WebKit.framework in Frameworks */,
 				479CD1D52869C29F00ABD0AB /* SnapKit in Frameworks */,
 				479CD1D22869C27400ABD0AB /* SDWebImage in Frameworks */,
 				477A76E8286A224C0028A292 /* RxCocoa in Frameworks */,
@@ -81,11 +86,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		47895B94286A411C0031DD91 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				47895B95286A411C0031DD91 /* WebKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		479CD187286985EA00ABD0AB = {
 			isa = PBXGroup;
 			children = (
 				479CD192286985EA00ABD0AB /* MovieSearch */,
 				479CD191286985EA00ABD0AB /* Products */,
+				47895B94286A411C0031DD91 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -219,6 +233,7 @@
 				479CD1D82869D25200ABD0AB /* MovieCell.swift */,
 				479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */,
 				477A76DF286A17630028A292 /* MovieSearchViewModel.swift */,
+				47895B92286A37140031DD91 /* MovieDetailViewController.swift */,
 				479CD1DA2869FDBD00ABD0AB /* Protocol */,
 			);
 			path = View;
@@ -327,6 +342,7 @@
 				479CD1C92869A33200ABD0AB /* MovieNetworkRepository.swift in Sources */,
 				477A76E2286A20210028A292 /* ViewModelDescribing.swift in Sources */,
 				479CD1D92869D25200ABD0AB /* MovieCell.swift in Sources */,
+				47895B93286A37140031DD91 /* MovieDetailViewController.swift in Sources */,
 				479CD1C228699E7C00ABD0AB /* HTTPNetworkError.swift in Sources */,
 				479CD1CC2869A89B00ABD0AB /* NetworkRepository.swift in Sources */,
 				479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */,

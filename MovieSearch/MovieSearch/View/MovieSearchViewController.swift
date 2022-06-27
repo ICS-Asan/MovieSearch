@@ -88,6 +88,7 @@ extension MovieSearchViewController {
         registerCollectionViewCell()
         setupCollectionViewDataSource()
         setupCollectionViewConstraints()
+        movieCollectionView.delegate = self
     }
     
     private func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -144,5 +145,15 @@ extension MovieSearchViewController: UISearchBarDelegate {
                 self?.populate(movie: self?.viewModel.searchResults)
             })
             .disposed(by: disposeBag)
+    }
+}
+
+extension MovieSearchViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = viewModel.searchResults[indexPath.row]
+        let destination = MovieDetailViewController()
+        navigationController?.pushViewController(destination, animated: true)
+        destination.setupDetailView(with: movie)
+        
     }
 }
