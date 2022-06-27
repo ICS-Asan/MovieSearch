@@ -13,6 +13,7 @@
 		479CD19B286985EA00ABD0AB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 479CD199286985EA00ABD0AB /* Main.storyboard */; };
 		479CD19D286985EA00ABD0AB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 479CD19C286985EA00ABD0AB /* Assets.xcassets */; };
 		479CD1A0286985EA00ABD0AB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 479CD19E286985EA00ABD0AB /* LaunchScreen.storyboard */; };
+		479CD1A92869872900ABD0AB /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 479CD1A82869872900ABD0AB /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				479CD1A92869872900ABD0AB /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = MovieSearch;
+			packageProductDependencies = (
+				479CD1A82869872900ABD0AB /* RxSwift */,
+			);
 			productName = MovieSearch;
 			productReference = 479CD190286985EA00ABD0AB /* MovieSearch.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = 479CD187286985EA00ABD0AB;
+			packageReferences = (
+				479CD1A72869872900ABD0AB /* XCRemoteSwiftPackageReference "RxSwift" */,
+			);
 			productRefGroup = 479CD191286985EA00ABD0AB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -360,6 +368,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		479CD1A72869872900ABD0AB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		479CD1A82869872900ABD0AB /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 479CD1A72869872900ABD0AB /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 479CD188286985EA00ABD0AB /* Project object */;
 }
