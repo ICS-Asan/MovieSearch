@@ -1,6 +1,6 @@
 import Foundation
 
-struct MovieSearhInformation {
+struct MovieSearchInformation {
     let lastBuildDate: String
     let total: Int
     let start: Int
