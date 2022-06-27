@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		477A76DE286A13740028A292 /* MovieSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76DD286A13740028A292 /* MovieSearchUseCase.swift */; };
+		477A76E0286A17630028A292 /* MovieSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76DF286A17630028A292 /* MovieSearchViewModel.swift */; };
 		479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD193286985EA00ABD0AB /* AppDelegate.swift */; };
 		479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD195286985EA00ABD0AB /* SceneDelegate.swift */; };
 		479CD198286985EA00ABD0AB /* MovieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */; };
@@ -36,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		477A76DD286A13740028A292 /* MovieSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchUseCase.swift; sourceTree = "<group>"; };
+		477A76DF286A17630028A292 /* MovieSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchViewModel.swift; sourceTree = "<group>"; };
 		479CD190286985EA00ABD0AB /* MovieSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		479CD193286985EA00ABD0AB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		479CD195286985EA00ABD0AB /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				479CD1D82869D25200ABD0AB /* MovieCell.swift */,
 				479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */,
 				479CD1DA2869FDBD00ABD0AB /* Protocol */,
+				477A76DF286A17630028A292 /* MovieSearchViewModel.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */,
 				477A76DE286A13740028A292 /* MovieSearchUseCase.swift in Sources */,
 				479CD1B72869973A00ABD0AB /* MovieSearchInformation.swift in Sources */,
+				477A76E0286A17630028A292 /* MovieSearchViewModel.swift in Sources */,
 				479CD1C52869A09900ABD0AB /* JSONParser.swift in Sources */,
 				479CD1D72869CF1200ABD0AB /* UIFont+extension.swift in Sources */,
 				479CD1B12869965E00ABD0AB /* MovieSearhInformationDTO.swift in Sources */,

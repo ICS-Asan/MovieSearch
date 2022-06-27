@@ -38,6 +38,7 @@ class MovieSearchViewController: UIViewController {
     
     private var movieCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
+    private let viewModel = MovieSearchViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
