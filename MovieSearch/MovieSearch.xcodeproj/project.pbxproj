@@ -23,6 +23,7 @@
 		479CD1BE28699A2800ABD0AB /* URLRequest+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */; };
 		479CD1C028699CB700ABD0AB /* ClientInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1BF28699CB700ABD0AB /* ClientInformation.swift */; };
 		479CD1C228699E7C00ABD0AB /* HTTPNetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1C128699E7C00ABD0AB /* HTTPNetworkError.swift */; };
+		479CD1C52869A09900ABD0AB /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1C42869A09900ABD0AB /* JSONParser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+extension.swift"; sourceTree = "<group>"; };
 		479CD1BF28699CB700ABD0AB /* ClientInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientInformation.swift; sourceTree = "<group>"; };
 		479CD1C128699E7C00ABD0AB /* HTTPNetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPNetworkError.swift; sourceTree = "<group>"; };
+		479CD1C42869A09900ABD0AB /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -114,6 +116,7 @@
 				479CD1BF28699CB700ABD0AB /* ClientInformation.swift */,
 				479CD1C128699E7C00ABD0AB /* HTTPNetworkError.swift */,
 				479CD1AF286995FD00ABD0AB /* NetworkDTO */,
+				479CD1C32869A08800ABD0AB /* Utility */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -150,6 +153,14 @@
 				479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		479CD1C32869A08800ABD0AB /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				479CD1C42869A09900ABD0AB /* JSONParser.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +244,7 @@
 				479CD1C228699E7C00ABD0AB /* HTTPNetworkError.swift in Sources */,
 				479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */,
 				479CD1B72869973A00ABD0AB /* MovieSearchInformation.swift in Sources */,
+				479CD1C52869A09900ABD0AB /* JSONParser.swift in Sources */,
 				479CD1B12869965E00ABD0AB /* MovieSearhInformationDTO.swift in Sources */,
 				479CD1C028699CB700ABD0AB /* ClientInformation.swift in Sources */,
 				479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */,
