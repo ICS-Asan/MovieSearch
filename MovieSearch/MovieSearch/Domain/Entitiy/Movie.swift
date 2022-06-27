@@ -9,4 +9,5 @@ struct Movie {
     let director: String
     let actor: String
     let userRating: String
+    let isBookmarked: Bool = false
 }
