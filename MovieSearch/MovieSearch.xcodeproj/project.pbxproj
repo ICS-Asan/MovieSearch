@@ -26,10 +26,11 @@
 		479CD1C52869A09900ABD0AB /* JSONParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1C42869A09900ABD0AB /* JSONParser.swift */; };
 		479CD1C92869A33200ABD0AB /* MovieNetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1C82869A33200ABD0AB /* MovieNetworkRepository.swift */; };
 		479CD1CC2869A89B00ABD0AB /* NetworkRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1CB2869A89B00ABD0AB /* NetworkRepository.swift */; };
-		479CD1CF2869C19700ABD0AB /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1CE2869C19700ABD0AB /* MovieCell.swift */; };
+		479CD1CF2869C19700ABD0AB /* MovieInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1CE2869C19700ABD0AB /* MovieInformationView.swift */; };
 		479CD1D22869C27400ABD0AB /* SDWebImage in Frameworks */ = {isa = PBXBuildFile; productRef = 479CD1D12869C27400ABD0AB /* SDWebImage */; };
 		479CD1D52869C29F00ABD0AB /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 479CD1D42869C29F00ABD0AB /* SnapKit */; };
 		479CD1D72869CF1200ABD0AB /* UIFont+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */; };
+		479CD1D92869D25200ABD0AB /* MovieCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1D82869D25200ABD0AB /* MovieCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,8 +54,9 @@
 		479CD1C42869A09900ABD0AB /* JSONParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONParser.swift; sourceTree = "<group>"; };
 		479CD1C82869A33200ABD0AB /* MovieNetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieNetworkRepository.swift; sourceTree = "<group>"; };
 		479CD1CB2869A89B00ABD0AB /* NetworkRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRepository.swift; sourceTree = "<group>"; };
-		479CD1CE2869C19700ABD0AB /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
+		479CD1CE2869C19700ABD0AB /* MovieInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieInformationView.swift; sourceTree = "<group>"; };
 		479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+extension.swift"; sourceTree = "<group>"; };
+		479CD1D82869D25200ABD0AB /* MovieCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -206,7 +208,8 @@
 		479CD1CD2869C18B00ABD0AB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				479CD1CE2869C19700ABD0AB /* MovieCell.swift */,
+				479CD1CE2869C19700ABD0AB /* MovieInformationView.swift */,
+				479CD1D82869D25200ABD0AB /* MovieCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -294,6 +297,7 @@
 			files = (
 				479CD198286985EA00ABD0AB /* ViewController.swift in Sources */,
 				479CD1C92869A33200ABD0AB /* MovieNetworkRepository.swift in Sources */,
+				479CD1D92869D25200ABD0AB /* MovieCell.swift in Sources */,
 				479CD1C228699E7C00ABD0AB /* HTTPNetworkError.swift in Sources */,
 				479CD1CC2869A89B00ABD0AB /* NetworkRepository.swift in Sources */,
 				479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */,
@@ -303,7 +307,7 @@
 				479CD1B12869965E00ABD0AB /* MovieSearhInformationDTO.swift in Sources */,
 				479CD1C028699CB700ABD0AB /* ClientInformation.swift in Sources */,
 				479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */,
-				479CD1CF2869C19700ABD0AB /* MovieCell.swift in Sources */,
+				479CD1CF2869C19700ABD0AB /* MovieInformationView.swift in Sources */,
 				479CD1AE28698D9D00ABD0AB /* EndPoint.swift in Sources */,
 				479CD1B32869966E00ABD0AB /* MovieDTO.swift in Sources */,
 				479CD1B92869974400ABD0AB /* Movie.swift in Sources */,
