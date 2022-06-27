@@ -218,8 +218,8 @@
 				479CD1CE2869C19700ABD0AB /* MovieInformationView.swift */,
 				479CD1D82869D25200ABD0AB /* MovieCell.swift */,
 				479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */,
-				479CD1DA2869FDBD00ABD0AB /* Protocol */,
 				477A76DF286A17630028A292 /* MovieSearchViewModel.swift */,
+				479CD1DA2869FDBD00ABD0AB /* Protocol */,
 			);
 			path = View;
 			sourceTree = "<group>";
