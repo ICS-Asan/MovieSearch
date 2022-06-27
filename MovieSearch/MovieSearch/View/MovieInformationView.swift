@@ -16,28 +16,28 @@ final class MovieInformationView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title3).bold
+        label.font = .preferredFont(forTextStyle: .body).bold
         
         return label
     }()
 
     private let directorLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .callout)
         
         return label
     }()
     
     private let actorLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .callout)
         
         return label
     }()
     
     private let userRatingLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .callout)
         
         return label
     }()
@@ -47,6 +47,7 @@ final class MovieInformationView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .leading
         stackView.spacing = 5
+        stackView.distribution = .equalSpacing
         
         return stackView
     }()
@@ -109,7 +110,7 @@ final class MovieInformationView: UIView {
     
     private func commonInit() {
         setupPosterImageViewLayout()
-        setupTextInformationStackView()
+        setupTextInformationStackViewLayout()
         setupBookmarkButtonLayout()
     }
     
@@ -120,9 +121,8 @@ final class MovieInformationView: UIView {
     private func setupPosterImageViewLayout() {
         addSubview(posterImageView)
         posterImageView.snp.makeConstraints { make in
-            make.leading.equalToSuperview().inset(20)
-            make.top.bottom.equalToSuperview().inset(5)
-            make.height.equalTo(100)
+            make.leading.top.bottom.equalToSuperview()
+            make.height.equalToSuperview()
             make.width.equalTo(posterImageView.snp.height).multipliedBy(0.7)
         }
     }
@@ -147,7 +147,7 @@ final class MovieInformationView: UIView {
     private func setupBookmarkButtonLayout() {
         addSubview(bookmarkButton)
         bookmarkButton.snp.makeConstraints { make in
-            make.top.trailing.equalToSuperview().inset(5)
+            make.top.trailing.equalToSuperview()
         }
     }
     
