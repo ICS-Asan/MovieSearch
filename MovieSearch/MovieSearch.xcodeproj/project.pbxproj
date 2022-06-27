@@ -10,6 +10,7 @@
 		477A76DE286A13740028A292 /* MovieSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76DD286A13740028A292 /* MovieSearchUseCase.swift */; };
 		477A76E0286A17630028A292 /* MovieSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76DF286A17630028A292 /* MovieSearchViewModel.swift */; };
 		477A76E2286A20210028A292 /* ViewModelDescribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76E1286A20210028A292 /* ViewModelDescribing.swift */; };
+		477A76E8286A224C0028A292 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 477A76E7286A224C0028A292 /* RxCocoa */; };
 		479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD193286985EA00ABD0AB /* AppDelegate.swift */; };
 		479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD195286985EA00ABD0AB /* SceneDelegate.swift */; };
 		479CD198286985EA00ABD0AB /* MovieSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */; };
@@ -72,6 +73,7 @@
 			files = (
 				479CD1D52869C29F00ABD0AB /* SnapKit in Frameworks */,
 				479CD1D22869C27400ABD0AB /* SDWebImage in Frameworks */,
+				477A76E8286A224C0028A292 /* RxCocoa in Frameworks */,
 				479CD1A92869872900ABD0AB /* RxSwift in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +261,7 @@
 				479CD1A82869872900ABD0AB /* RxSwift */,
 				479CD1D12869C27400ABD0AB /* SDWebImage */,
 				479CD1D42869C29F00ABD0AB /* SnapKit */,
+				477A76E7286A224C0028A292 /* RxCocoa */,
 			);
 			productName = MovieSearch;
 			productReference = 479CD190286985EA00ABD0AB /* MovieSearch.app */;
@@ -292,6 +295,7 @@
 				479CD1A72869872900ABD0AB /* XCRemoteSwiftPackageReference "RxSwift" */,
 				479CD1D02869C27400ABD0AB /* XCRemoteSwiftPackageReference "SDWebImage" */,
 				479CD1D32869C29F00ABD0AB /* XCRemoteSwiftPackageReference "SnapKit" */,
+				477A76E6286A224C0028A292 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 479CD191286985EA00ABD0AB /* Products */;
 			projectDirPath = "";
@@ -554,6 +558,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		477A76E6286A224C0028A292 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.5.0;
+			};
+		};
 		479CD1A72869872900ABD0AB /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift";
@@ -581,6 +593,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		477A76E7286A224C0028A292 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 479CD1A72869872900ABD0AB /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
 		479CD1A82869872900ABD0AB /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 479CD1A72869872900ABD0AB /* XCRemoteSwiftPackageReference "RxSwift" */;
