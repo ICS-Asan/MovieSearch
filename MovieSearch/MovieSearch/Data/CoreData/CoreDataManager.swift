@@ -48,8 +48,17 @@ final class CoreDataManager {
         saveContextChange()
     }
     
-    func delete() {
+    func delete(with title: String) {
+        let request = MovieCoreDataDTO.fetchRequest()
+        let predicate = NSPredicate(format: "title == %@", title)
+        request.predicate = predicate
         
+        guard let fetchResult = try? context.fetch(request) else { return }
+        fetchResult.forEach {
+            context.delete($0)
+        }
+        
+        saveContextChange()
     }
     
     func saveContextChange() {
