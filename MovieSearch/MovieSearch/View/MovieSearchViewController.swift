@@ -1,6 +1,9 @@
 import UIKit
 
 class MovieSearchViewController: UIViewController {
+    private enum Section {
+        case list
+    }
     private let viewTitleLable: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title2).bold
@@ -33,6 +36,8 @@ class MovieSearchViewController: UIViewController {
         return searchController
     }()
     
+    private let movieCollectionView = UICollectionView(frame: .zero)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
@@ -44,3 +49,30 @@ class MovieSearchViewController: UIViewController {
         navigationItem.searchController = searchController
     }
 }
+
+extension MovieSearchViewController {
+    private func setupHomeCollectionView() {
+        movieCollectionView.collectionViewLayout = createCollectionViewLayout()
+    }
+    
+    private func createCollectionViewLayout() -> UICollectionViewLayout {
+        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
+                                                            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
+            return self.creatListSectionLayout()
+        }
+        return layout
+    }
+
+    private func creatListSectionLayout() -> NSCollectionLayoutSection {
+        let itemsize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
+                                              heightDimension: .estimated(120))
+        let item = NSCollectionLayoutItem(layoutSize: itemsize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: itemsize.widthDimension,
+                                               heightDimension: itemsize.heightDimension)
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
+        let section = NSCollectionLayoutSection(group: group)
+        
+        return section
+    }
+}
+
