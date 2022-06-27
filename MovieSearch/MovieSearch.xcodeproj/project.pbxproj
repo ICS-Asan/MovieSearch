@@ -20,6 +20,7 @@
 		479CD1B72869973A00ABD0AB /* MovieSearchInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1B62869973A00ABD0AB /* MovieSearchInformation.swift */; };
 		479CD1B92869974400ABD0AB /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1B82869974400ABD0AB /* Movie.swift */; };
 		479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1BA2869994C00ABD0AB /* HTTPNetworkManager.swift */; };
+		479CD1BE28699A2800ABD0AB /* URLRequest+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		479CD1B62869973A00ABD0AB /* MovieSearchInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchInformation.swift; sourceTree = "<group>"; };
 		479CD1B82869974400ABD0AB /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
 		479CD1BA2869994C00ABD0AB /* HTTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPNetworkManager.swift; sourceTree = "<group>"; };
+		479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			children = (
 				479CD1B42869971A00ABD0AB /* Domain */,
 				479CD1AC28698D8A00ABD0AB /* Network */,
+				479CD1BC28699A0100ABD0AB /* Extensions */,
 				479CD1AA28698C6B00ABD0AB /* Application */,
 				479CD197286985EA00ABD0AB /* ViewController.swift */,
 				479CD199286985EA00ABD0AB /* Main.storyboard */,
@@ -133,6 +136,14 @@
 				479CD1B82869974400ABD0AB /* Movie.swift */,
 			);
 			path = Entitiy;
+			sourceTree = "<group>";
+		};
+		479CD1BC28699A0100ABD0AB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -221,6 +232,7 @@
 				479CD1B32869966E00ABD0AB /* MovieDTO.swift in Sources */,
 				479CD1B92869974400ABD0AB /* Movie.swift in Sources */,
 				479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */,
+				479CD1BE28699A2800ABD0AB /* URLRequest+extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
