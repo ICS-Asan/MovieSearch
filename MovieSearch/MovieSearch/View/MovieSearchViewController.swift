@@ -40,6 +40,7 @@ class MovieSearchViewController: UIViewController {
     private var movieCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
+    private let viewWillAppearObserver: PublishSubject<[Movie]> = .init()
     private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
     private let disposeBag: DisposeBag = .init()
     
@@ -59,8 +60,18 @@ class MovieSearchViewController: UIViewController {
         setupHomeCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.fetchBookmarkedMovie()
+            .subscribe(onNext: { [weak self] data in
+                self?.viewWillAppearObserver.onNext(data)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func bind() {
         let input = MovieSearchViewModel.Input(
+            viewWillAppearObserver: viewWillAppearObserver,
             searchMovieObserver: searchMovieObserver
         )
         let _ = viewModel.transform(input)
@@ -71,14 +82,6 @@ class MovieSearchViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
-    }
-    
-    private func populate(movie: [Movie]?) {
-        guard let movie = movie else { return }
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
-        snapshot.appendSections([.list])
-        snapshot.appendItems(movie, toSection: .list)
-        dataSource?.apply(snapshot)
     }
 }
 
@@ -131,6 +134,14 @@ extension MovieSearchViewController {
         movieCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func populate(movie: [Movie]?) {
+        guard let movie = movie else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
+        snapshot.appendSections([.list])
+        snapshot.appendItems(movie, toSection: .list)
+        dataSource?.apply(snapshot)
     }
 }
 
