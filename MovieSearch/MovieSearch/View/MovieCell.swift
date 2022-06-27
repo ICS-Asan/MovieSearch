@@ -65,6 +65,34 @@ final class MovieCell: UICollectionViewCell {
         commonInit()
     }
     
+    func setupCell(with movie: Movie) {
+        setupPosterImageView(url: movie.image)
+        setupTitleLabel(with: movie.title)
+        setupDirectorLabel(with: movie.director)
+        setupActorLabel(with: movie.actor)
+        setupUserRatingLable(with: movie.userRating)
+    }
+    
+    private func setupPosterImageView(url: String) {
+        posterImageView.sd_setImage(with: URL(string: url))
+    }
+    
+    private func setupTitleLabel(with title: String) {
+        titleLabel.text = title
+    }
+    
+    private func setupDirectorLabel(with director:String) {
+        directorLabel.text = "감독: " + director
+    }
+    
+    private func setupActorLabel(with actor: String) {
+        actorLabel.text = "출연: " + actor
+    }
+    
+    private func setupUserRatingLable(with userRating: String) {
+        userRatingLabel.text = "평점: " + userRating
+    }
+    
     private func commonInit() {
         setupPosterImageViewLayout()
         setupTextInformationStackView()
