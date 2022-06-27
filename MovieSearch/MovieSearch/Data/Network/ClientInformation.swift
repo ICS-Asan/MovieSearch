@@ -7,6 +7,6 @@ enum ClientInformation {
     }
     enum Secret {
         static let key = "X-Naver-Client-Secret"
-        static let value = "mJPepkAAi3"
+        static let value = "MsuEr9QhRX"
     }
 }

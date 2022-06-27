@@ -80,7 +80,11 @@ final class MovieInformationView: UIView {
     }
     
     private func setupPosterImageView(url: String) {
-        posterImageView.sd_setImage(with: URL(string: url))
+        if url.isEmpty {
+            posterImageView.sd_setImage(with: URL(string: "https://i.imgur.com/lQ3niDp.png"))
+        } else {
+            posterImageView.sd_setImage(with: URL(string: url))
+        }
     }
     
     private func setupTitleLabel(with title: String) {
@@ -112,6 +116,7 @@ final class MovieInformationView: UIView {
         setupPosterImageViewLayout()
         setupTextInformationStackViewLayout()
         setupBookmarkButtonLayout()
+        setupBookmarkButtonAction()
     }
     
     private func setupBookmarkButtonAction() {

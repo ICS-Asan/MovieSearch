@@ -1,7 +1,7 @@
 import Foundation
 
 enum EndPoint {
-    private static let mainPath = "    https://openapi.naver.com/v1/search/movie.json"
+    private static let mainPath = "https://openapi.naver.com/v1/search/movie.json"
     
     case movieSearch(word: String, displayCount: Int = 20)
 

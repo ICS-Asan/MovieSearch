@@ -1,4 +1,5 @@
 import UIKit
+import RxSwift
 
 class MovieSearchViewController: UIViewController {
     private enum Section {
@@ -38,6 +39,19 @@ class MovieSearchViewController: UIViewController {
     
     private var movieCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
+    private let viewModel = MovieSearchViewModel()
+    private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
+    private let disposeBag: DisposeBag = .init()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        bind()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +59,18 @@ class MovieSearchViewController: UIViewController {
         setupHomeCollectionView()
     }
     
+    private func bind() {
+        let input = MovieSearchViewModel.Input(
+            searchMovieObserver: searchMovieObserver
+        )
+        let _ = viewModel.transform(input)
+    }
+    
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: viewTitleLable)
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
         navigationItem.searchController = searchController
+        searchController.searchBar.delegate = self
     }
     
     private func populate(movie: [Movie]?) {
@@ -108,5 +130,19 @@ extension MovieSearchViewController {
         movieCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+}
+
+extension MovieSearchViewController: UISearchBarDelegate {
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard let searchWord = searchBar.searchTextField.text,
+              searchWord.isEmpty == false else { return }
+        viewModel.fetchSearchResult(with: searchWord)
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                self?.searchMovieObserver.onNext(result)
+                self?.populate(movie: self?.viewModel.searchResults)
+            })
+            .disposed(by: disposeBag)
     }
 }
