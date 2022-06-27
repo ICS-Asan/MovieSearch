@@ -33,8 +33,19 @@ final class CoreDataManager {
         }
     }
     
-    func save() {
+    func save(_ movie: Movie) {
+        let movieObject = MovieCoreDataDTO(context: context)
+        movieObject.title = movie.title
+        movieObject.link = movie.link
+        movieObject.image = movie.image
+        movieObject.subtitle = movie.subtitle
+        movieObject.pubDate = movie.pubDate
+        movieObject.director = movie.director
+        movieObject.actor = movie.actor
+        movieObject.userRating = movie.userRating
+        movieObject.isBookmarked = movie.isBookmarked
         
+        saveContextChange()
     }
     
     func delete() {
