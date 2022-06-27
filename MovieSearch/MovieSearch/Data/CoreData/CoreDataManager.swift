@@ -40,4 +40,14 @@ final class CoreDataManager {
     func delete() {
         
     }
+    
+    func saveContextChange() {
+        if context.hasChanges {
+            do {
+                try context.save()
+            } catch {
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
