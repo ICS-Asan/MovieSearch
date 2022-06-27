@@ -19,6 +19,7 @@
 		479CD1B32869966E00ABD0AB /* MovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1B22869966E00ABD0AB /* MovieDTO.swift */; };
 		479CD1B72869973A00ABD0AB /* MovieSearchInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1B62869973A00ABD0AB /* MovieSearchInformation.swift */; };
 		479CD1B92869974400ABD0AB /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1B82869974400ABD0AB /* Movie.swift */; };
+		479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 479CD1BA2869994C00ABD0AB /* HTTPNetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		479CD1B22869966E00ABD0AB /* MovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDTO.swift; sourceTree = "<group>"; };
 		479CD1B62869973A00ABD0AB /* MovieSearchInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchInformation.swift; sourceTree = "<group>"; };
 		479CD1B82869974400ABD0AB /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		479CD1BA2869994C00ABD0AB /* HTTPNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPNetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +102,7 @@
 		479CD1AC28698D8A00ABD0AB /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				479CD1BA2869994C00ABD0AB /* HTTPNetworkManager.swift */,
 				479CD1AD28698D9D00ABD0AB /* EndPoint.swift */,
 				479CD1AF286995FD00ABD0AB /* NetworkDTO */,
 			);
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				479CD198286985EA00ABD0AB /* ViewController.swift in Sources */,
+				479CD1BB2869994C00ABD0AB /* HTTPNetworkManager.swift in Sources */,
 				479CD1B72869973A00ABD0AB /* MovieSearchInformation.swift in Sources */,
 				479CD1B12869965E00ABD0AB /* MovieSearhInformationDTO.swift in Sources */,
 				479CD194286985EA00ABD0AB /* AppDelegate.swift in Sources */,
