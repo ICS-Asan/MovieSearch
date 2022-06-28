@@ -6,10 +6,12 @@ class BookmarkListViewController: UIViewController {
     }
     
     private var bookmarkCollectionView: UICollectionView!
+    private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavigationBar()
+        setupBookmarkCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -27,10 +29,11 @@ class BookmarkListViewController: UIViewController {
 }
 
 extension BookmarkListViewController {
-    private func setupHomeCollectionView() {
+    private func setupBookmarkCollectionView() {
         bookmarkCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         setupCollectionViewConstraints()
-        
+        registerCollectionViewCell()
+        setupCollectionViewDataSource()
     }
     
     private func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -58,5 +61,20 @@ extension BookmarkListViewController {
         bookmarkCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func registerCollectionViewCell() {
+        bookmarkCollectionView.register(MovieCell.self)
+    }
+    
+    private func setupCollectionViewDataSource() {
+        dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: bookmarkCollectionView) { collectionView, indexPath, item in
+            guard let cell = collectionView.dequeueReusableCell(MovieCell.self, for: indexPath) else {
+                return UICollectionViewCell()
+            }
+            cell.setupCell(with: item)
+            return cell
+        }
+        bookmarkCollectionView.dataSource = dataSource
     }
 }
