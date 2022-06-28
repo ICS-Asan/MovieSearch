@@ -5,6 +5,7 @@ class MovieSearchViewController: UIViewController {
     private enum Section {
         case list
     }
+    
     private let viewTitleLable: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title2).bold
