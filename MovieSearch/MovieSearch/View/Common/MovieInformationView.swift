@@ -6,7 +6,7 @@ final class MovieInformationView: UIView {
     var changeBookmarkState: (() -> Void)?
     
     private var isBookmarked: Bool {
-        return bookmarkButton.tintColor == .systemYellow
+        return bookmarkButton.tintColor == Design.Color.bookmarkedButton
     }
 
     private let posterImageView: UIImageView = {
@@ -17,28 +17,28 @@ final class MovieInformationView: UIView {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body).bold
+        label.font = Design.Font.movieInformationTitle
         
         return label
     }()
 
     private let directorLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .callout)
+        label.font = Design.Font.movieInformation
         
         return label
     }()
     
     private let actorLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .callout)
+        label.font = Design.Font.movieInformation
         
         return label
     }()
     
     private let userRatingLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .callout)
+        label.font = Design.Font.movieInformation
         
         return label
     }()
@@ -55,8 +55,8 @@ final class MovieInformationView: UIView {
     
     private let bookmarkButton: UIButton = {
        let button = UIButton()
-        button.setImage(UIImage(systemName: "star.fill"), for: .normal)
-        button.tintColor = .secondarySystemBackground
+        button.setImage(Design.Image.bookmarkButton, for: .normal)
+        button.tintColor = Design.Color.normalButton
         
         return button
     }()
@@ -82,7 +82,7 @@ final class MovieInformationView: UIView {
     
     private func setupPosterImageView(url: String) {
         if url.isEmpty {
-            posterImageView.sd_setImage(with: URL(string: "https://i.imgur.com/lQ3niDp.png"))
+            posterImageView.sd_setImage(with: URL(string: Design.Text.defaultPosterURL))
         } else {
             posterImageView.sd_setImage(with: URL(string: url))
         }
@@ -93,22 +93,22 @@ final class MovieInformationView: UIView {
     }
     
     private func setupDirectorLabel(with director:String) {
-        directorLabel.text = "감독: " + director
+        directorLabel.text = Design.Text.directorTitle + director
     }
     
     private func setupActorLabel(with actor: String) {
-        actorLabel.text = "출연: " + actor
+        actorLabel.text = Design.Text.actorTitle + actor
     }
     
     private func setupUserRatingLable(with userRating: String) {
-        userRatingLabel.text = "평점: " + userRating
+        userRatingLabel.text = Design.Text.userRatingTitle + userRating
     }
     
     private func setupBookmarkButtonColor(with isBookmarked: Bool) {
         if isBookmarked {
-            bookmarkButton.tintColor = .systemYellow
+            bookmarkButton.tintColor = Design.Color.bookmarkedButton
         } else {
-            bookmarkButton.tintColor = .secondarySystemBackground
+            bookmarkButton.tintColor = Design.Color.normalButton
         }
     }
     

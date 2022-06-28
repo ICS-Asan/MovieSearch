@@ -45,7 +45,7 @@ class MovieDetailViewController: UIViewController {
     }
 
     private func setupDetailViewLayout() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Design.Color.defaultBackground
         view.addSubview(headerView)
         view.addSubview(webView)
         headerView.snp.makeConstraints { make in

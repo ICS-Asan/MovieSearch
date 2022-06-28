@@ -45,7 +45,7 @@ class BookmarkListViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissView))
-        navigationItem.title = "즐겨찾기 목록"
+        navigationItem.title = Design.Text.bookmarkListViewTitle
     }
     
     private func fetchBookmarkedMovie() {

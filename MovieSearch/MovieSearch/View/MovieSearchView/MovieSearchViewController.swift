@@ -8,20 +8,20 @@ class MovieSearchViewController: UIViewController {
     
     private let viewTitleLable: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title2).bold
-        label.text =  "네이버 영화 검색"
+        label.font = Design.Font.movieSearchViewTitle
+        label.text = Design.Text.movieSearchViewTitle
         
         return label
     }()
     
     private let bookmarkButton: UIButton = {
         let button = UIButton()
-        button.setTitle("즐겨찾기", for: .normal)
+        button.setTitle(Design.Text.moveBookmarkListButtonTitle, for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
-        button.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        button.setImage(Design.Image.bookmarkButton, for: .normal)
         button.tintColor = .systemYellow
-        button.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        button.layer.borderColor = Design.Color.border
         button.layer.borderWidth = 1
         
         return button
@@ -31,8 +31,8 @@ class MovieSearchViewController: UIViewController {
         let searchController = UISearchController()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
-        searchController.searchBar.barTintColor = .systemBackground
-        searchController.searchBar.searchTextField.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        searchController.searchBar.barTintColor = Design.Color.defaultBackground
+        searchController.searchBar.searchTextField.layer.borderColor = Design.Color.border
         searchController.searchBar.searchTextField.layer.borderWidth = 1
         
         return searchController
@@ -103,7 +103,7 @@ class MovieSearchViewController: UIViewController {
     
     @objc private func presentBookmarkListView() {
         let destination = UINavigationController(rootViewController: BookmarkListViewController())
-        destination.view.backgroundColor = .systemBackground
+        destination.view.backgroundColor = Design.Color.defaultBackground
         destination.modalPresentationStyle = .fullScreen
         present(destination, animated: true)
     }
