@@ -65,6 +65,7 @@ extension BookmarkListViewController {
         setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
+        bookmarkCollectionView.delegate = self
     }
     
     private func createCollectionViewLayout() -> UICollectionViewLayout {
@@ -115,5 +116,15 @@ extension BookmarkListViewController {
         snapshot.appendSections([.list])
         snapshot.appendItems(movie, toSection: .list)
         dataSource?.apply(snapshot)
+    }
+}
+
+extension BookmarkListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let movie = viewModel.bookmarkedMovie[indexPath.row]
+        let destination = MovieDetailViewController()
+        navigationController?.pushViewController(destination, animated: true)
+        destination.setupDetailView(with: movie)
+        
     }
 }
