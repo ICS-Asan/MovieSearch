@@ -1,12 +1,24 @@
 import UIKit
 import SnapKit
 import WebKit
+import RxSwift
 
 class MovieDetailViewController: UIViewController {
 
     private let headerView = UIView()
     private let webView = WKWebView(frame: .zero)
-    var movie: Movie?
+    private let viewModel = MovieDetailViewModel()
+    private let setupViewObserver: PublishSubject<Movie> = .init()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        bind()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +33,14 @@ class MovieDetailViewController: UIViewController {
         navigationItem.title = movie.title
         setupHeaderView(with: movie)
         setupWebView(with: movie.link)
+        setupViewObserver.onNext(movie)
+    }
+    
+    private func bind() {
+        let input = MovieDetailViewModel.Input(
+            setupViewObserver: setupViewObserver
+        )
+        let _ = viewModel.transform(input)
     }
 
     private func setupDetailViewLayout() {
