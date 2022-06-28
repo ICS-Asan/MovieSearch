@@ -52,16 +52,29 @@ final class MovieSearchViewModel {
         movieSearchUseCase.fetchMovieSearchInformation(with: word)
     }
     
-    private func applyBookmarkState() {
-        bookmarkedMovie.forEach { favorite in
-            let index = searchResults.firstIndex(where: { $0.title  == favorite.title })
-            changeBookmarkState(at: index)
+    func resetBookmarkState() -> Observable<[Movie]?> {
+        return Observable.create { [weak self] emitter in
+            self?.bookmarkedMovie.forEach { favorite in
+                let index = self?.searchResults.firstIndex(where: { $0.title  == favorite.title })
+                self?.changeBookmarkState(at: index, to: false)
+            }
+            emitter.onNext(self?.searchResults)
+            emitter.onCompleted()
+            
+            return Disposables.create()
         }
     }
     
-    private func changeBookmarkState(at index: Int?) {
+    private func applyBookmarkState() {
+        bookmarkedMovie.forEach { favorite in
+            let index = searchResults.firstIndex(where: { $0.title  == favorite.title })
+            changeBookmarkState(at: index, to: true)
+        }
+    }
+    
+    private func changeBookmarkState(at index: Int?, to state: Bool) {
         guard let index = index else { return }
-        searchResults[index].isBookmarked = true
+        searchResults[index].isBookmarked = state
     }
     
     private func toggleBookmarkState(at index: Int) {
@@ -81,7 +94,7 @@ extension MovieSearchViewModel {
         let loadBookmarkedMovie: Observable<[Movie]>
         let searchMovieObserver: Observable<MovieSearchInformation?>
         let didTabBookmarkButton: Observable<Int>
-
+        
         init(
             loadBookmarkedMovie: Observable<[Movie]>,
             searchMovieObserver: Observable<MovieSearchInformation?>,
@@ -92,7 +105,6 @@ extension MovieSearchViewModel {
             self.didTabBookmarkButton = didTabBookmarkButton
         }
     }
-
+    
     final class Output { }
-
 }

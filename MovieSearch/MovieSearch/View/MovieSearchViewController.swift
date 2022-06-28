@@ -68,6 +68,14 @@ class MovieSearchViewController: UIViewController {
         populate(movie: viewModel.searchResults)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.resetBookmarkState()
+            .subscribe(onNext: { [weak self] movies in
+                self?.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func bind() {
         let input = MovieSearchViewModel.Input(
             loadBookmarkedMovie: loadBookmarkedMovie,
