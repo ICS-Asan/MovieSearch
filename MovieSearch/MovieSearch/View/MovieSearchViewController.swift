@@ -40,7 +40,9 @@ class MovieSearchViewController: UIViewController {
     private var movieCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
+    private let viewWillAppearObserver: PublishSubject<[Movie]> = .init()
     private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
+    private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init() {
@@ -59,9 +61,17 @@ class MovieSearchViewController: UIViewController {
         setupHomeCollectionView()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        fetchBookmarkedMovie()
+        populate(movie: viewModel.searchResults)
+    }
+    
     private func bind() {
         let input = MovieSearchViewModel.Input(
-            searchMovieObserver: searchMovieObserver
+            viewWillAppearObserver: viewWillAppearObserver,
+            searchMovieObserver: searchMovieObserver,
+            didTabBookmarkButton: didTabBookmarkButton
         )
         let _ = viewModel.transform(input)
     }
@@ -73,12 +83,12 @@ class MovieSearchViewController: UIViewController {
         searchController.searchBar.delegate = self
     }
     
-    private func populate(movie: [Movie]?) {
-        guard let movie = movie else { return }
-        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
-        snapshot.appendSections([.list])
-        snapshot.appendItems(movie, toSection: .list)
-        dataSource?.apply(snapshot)
+    private func fetchBookmarkedMovie() {
+        viewModel.fetchBookmarkedMovie()
+            .subscribe(onNext: { [weak self] data in
+                self?.viewWillAppearObserver.onNext(data)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -120,6 +130,9 @@ extension MovieSearchViewController {
             guard let cell = collectionView.dequeueReusableCell(MovieCell.self, for: indexPath) else {
                 return UICollectionViewCell()
             }
+            cell.containerView.changeBookmarkState = {
+                self.didTabBookmarkButton.onNext(indexPath.row)
+            }
             cell.setupCell(with: item)
             return cell
         }
@@ -131,6 +144,14 @@ extension MovieSearchViewController {
         movieCollectionView.snp.makeConstraints { make in
             make.edges.equalTo(view.safeAreaLayoutGuide)
         }
+    }
+    
+    private func populate(movie: [Movie]?) {
+        guard let movie = movie else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
+        snapshot.appendSections([.list])
+        snapshot.appendItems(movie, toSection: .list)
+        dataSource?.apply(snapshot)
     }
 }
 
@@ -145,6 +166,7 @@ extension MovieSearchViewController: UISearchBarDelegate {
                 self?.populate(movie: self?.viewModel.searchResults)
             })
             .disposed(by: disposeBag)
+        fetchBookmarkedMovie()
     }
 }
 
