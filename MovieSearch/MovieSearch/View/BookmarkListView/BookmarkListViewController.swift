@@ -6,7 +6,7 @@ class BookmarkListViewController: UIViewController {
         case list
     }
     
-    private var bookmarkCollectionView: UICollectionView!
+    private var bookmarkCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list)
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = BookmarkListViewModel()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
@@ -45,7 +45,7 @@ class BookmarkListViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissView))
-        navigationItem.title = "즐겨찾기 목록"
+        navigationItem.title = Design.Text.bookmarkListViewTitle
     }
     
     private func fetchBookmarkedMovie() {
@@ -64,31 +64,10 @@ class BookmarkListViewController: UIViewController {
 
 extension BookmarkListViewController {
     private func setupBookmarkCollectionView() {
-        bookmarkCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
         setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
         bookmarkCollectionView.delegate = self
-    }
-    
-    private func createCollectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
-                                                            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            return self.creatListSectionLayout()
-        }
-        return layout
-    }
-
-    private func creatListSectionLayout() -> NSCollectionLayoutSection {
-        let itemsize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .estimated(120))
-        let item = NSCollectionLayoutItem(layoutSize: itemsize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: itemsize.widthDimension,
-                                               heightDimension: itemsize.heightDimension)
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
-        let section = NSCollectionLayoutSection(group: group)
-        
-        return section
     }
     
     private func setupCollectionViewConstraints() {
@@ -112,6 +91,7 @@ extension BookmarkListViewController {
                 self?.fetchBookmarkedMovie()
             }
             cell.setupCell(with: item)
+            
             return cell
         }
         bookmarkCollectionView.dataSource = dataSource

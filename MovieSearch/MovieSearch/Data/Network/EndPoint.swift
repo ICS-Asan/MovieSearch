@@ -12,6 +12,7 @@ enum EndPoint {
             let searchWord = URLQueryItem(name: "query", value: "\(word)")
             let display = URLQueryItem(name: "display", value: "\(display)")
             components?.queryItems = [searchWord, display]
+            
             return components?.url
         }
     }

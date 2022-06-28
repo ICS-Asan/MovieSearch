@@ -4,7 +4,6 @@ import WebKit
 import RxSwift
 
 class MovieDetailViewController: UIViewController {
-
     private let headerView = UIView()
     private let webView = WKWebView(frame: .zero)
     private let viewModel = MovieDetailViewModel()
@@ -46,7 +45,7 @@ class MovieDetailViewController: UIViewController {
     }
 
     private func setupDetailViewLayout() {
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = Design.Color.defaultBackground
         view.addSubview(headerView)
         view.addSubview(webView)
         headerView.snp.makeConstraints { make in
@@ -63,7 +62,9 @@ class MovieDetailViewController: UIViewController {
     private func setupHeaderView(with movie: Movie) {
         let movieInformationView = MovieInformationView()
         movieInformationView.setupView(with: movie)
-        movieInformationView.changeBookmarkState = { self.didTabBookmarkButton.onNext(()) }
+        movieInformationView.changeBookmarkState = {
+            self.didTabBookmarkButton.onNext(())
+        }
         headerView.addSubview(movieInformationView)
         movieInformationView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)

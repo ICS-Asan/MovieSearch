@@ -9,10 +9,11 @@ final class HTTPNetworkManager {
         self.urlSession = urlSession
     }
     
-    func createURLRequest(with endPoint: URL?) -> URLRequest? {
+    private func createURLRequest(with endPoint: URL?) -> URLRequest? {
         guard let endPoint = endPoint else {
             return nil
         }
+        
         var urlRequest = URLRequest(url: endPoint, method: .get)
         urlRequest.setValue(
             ClientInformation.ID.value,

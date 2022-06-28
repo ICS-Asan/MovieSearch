@@ -1,18 +1,11 @@
-//
-//  MovieCoreDataDTO+CoreDataProperties.swift
-//  MovieSearch
-//
-//  Created by Seul Mac on 2022/06/28.
-//
-//
-
 import Foundation
 import CoreData
 
 
 extension MovieCoreDataDTO {
+    static let entityName = String(describing: MovieCoreDataDTO.self)
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MovieCoreDataDTO> {
-        return NSFetchRequest<MovieCoreDataDTO>(entityName: "MovieCoreDataDTO")
+        return NSFetchRequest<MovieCoreDataDTO>(entityName: MovieCoreDataDTO.entityName)
     }
 
     @NSManaged public var title: String?

@@ -8,20 +8,20 @@ class MovieSearchViewController: UIViewController {
     
     private let viewTitleLable: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title2).bold
-        label.text =  "네이버 영화 검색"
+        label.font = Design.Font.movieSearchViewTitle
+        label.text = Design.Text.movieSearchViewTitle
         
         return label
     }()
     
     private let bookmarkButton: UIButton = {
         let button = UIButton()
-        button.setTitle("즐겨찾기", for: .normal)
+        button.setTitle(Design.Text.moveBookmarkListButtonTitle, for: .normal)
         button.setTitleColor(.label, for: .normal)
         button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
-        button.setImage(UIImage(systemName: "star.fill"), for: .normal)
+        button.setImage(Design.Image.bookmarkButton, for: .normal)
         button.tintColor = .systemYellow
-        button.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        button.layer.borderColor = Design.Color.border
         button.layer.borderWidth = 1
         
         return button
@@ -31,14 +31,14 @@ class MovieSearchViewController: UIViewController {
         let searchController = UISearchController()
         searchController.hidesNavigationBarDuringPresentation = false
         searchController.searchBar.setSearchFieldBackgroundImage(UIImage(), for: .normal)
-        searchController.searchBar.barTintColor = .systemBackground
-        searchController.searchBar.searchTextField.layer.borderColor = UIColor.secondarySystemBackground.cgColor
+        searchController.searchBar.barTintColor = Design.Color.defaultBackground
+        searchController.searchBar.searchTextField.layer.borderColor = Design.Color.border
         searchController.searchBar.searchTextField.layer.borderWidth = 1
         
         return searchController
     }()
     
-    private var movieCollectionView: UICollectionView!
+    private var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list)
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
@@ -103,7 +103,7 @@ class MovieSearchViewController: UIViewController {
     
     @objc private func presentBookmarkListView() {
         let destination = UINavigationController(rootViewController: BookmarkListViewController())
-        destination.view.backgroundColor = .systemBackground
+        destination.view.backgroundColor = Design.Color.defaultBackground
         destination.modalPresentationStyle = .fullScreen
         present(destination, animated: true)
     }
@@ -111,31 +111,17 @@ class MovieSearchViewController: UIViewController {
 
 extension MovieSearchViewController {
     private func setupHomeCollectionView() {
-        movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+        setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
-        setupCollectionViewConstraints()
         movieCollectionView.delegate = self
     }
     
-    private func createCollectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
-                                                            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            return self.creatListSectionLayout()
+    private func setupCollectionViewConstraints() {
+        view.addSubview(movieCollectionView)
+        movieCollectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        return layout
-    }
-
-    private func creatListSectionLayout() -> NSCollectionLayoutSection {
-        let itemsize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .estimated(120))
-        let item = NSCollectionLayoutItem(layoutSize: itemsize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: itemsize.widthDimension,
-                                               heightDimension: itemsize.heightDimension)
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
-        let section = NSCollectionLayoutSection(group: group)
-        
-        return section
     }
     
     private func registerCollectionViewCell() {
@@ -151,16 +137,10 @@ extension MovieSearchViewController {
                 self.didTabBookmarkButton.onNext(indexPath.row)
             }
             cell.setupCell(with: item)
+            
             return cell
         }
         movieCollectionView.dataSource = dataSource
-    }
-    
-    private func setupCollectionViewConstraints() {
-        view.addSubview(movieCollectionView)
-        movieCollectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
     }
     
     private func populate(movie: [Movie]?) {
@@ -193,6 +173,5 @@ extension MovieSearchViewController: UICollectionViewDelegate {
         let destination = MovieDetailViewController()
         navigationController?.pushViewController(destination, animated: true)
         destination.setupDetailView(with: movie)
-        
     }
 }

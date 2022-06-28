@@ -8,7 +8,6 @@ final class MovieSearchViewModel {
     private(set) var totalResultCount: Int = 0
     private var bookmarkedMovie: [Movie] = []
     
-    
     func transform(_ input: Input) -> Output {
         input
             .loadBookmarkedMovie
@@ -34,20 +33,10 @@ final class MovieSearchViewModel {
         return Output()
     }
     
-    func storeBookmarkedMovie(movies: [Movie]) {
-        bookmarkedMovie = movies
-    }
-    
     func fetchBookmarkedMovie() -> Observable<[Movie]> {
         return movieSearchUseCase.fetchBookmarkedMovie()
     }
-    
-    func storeSearchResult(with movieInformation: MovieSearchInformation?) {
-        guard let movieInformation = movieInformation else { return }
-        totalResultCount = movieInformation.total
-        searchResults = movieInformation.items
-    }
-    
+
     func fetchSearchResult(with word: String) -> Observable<MovieSearchInformation?> {
         movieSearchUseCase.fetchMovieSearchInformation(with: word)
     }
@@ -65,6 +54,16 @@ final class MovieSearchViewModel {
         }
     }
     
+    private func storeBookmarkedMovie(movies: [Movie]) {
+        bookmarkedMovie = movies
+    }
+    
+    private func storeSearchResult(with movieInformation: MovieSearchInformation?) {
+        guard let movieInformation = movieInformation else { return }
+        totalResultCount = movieInformation.total
+        searchResults = movieInformation.items
+    }
+    
     private func applyBookmarkState() {
         bookmarkedMovie.forEach { favorite in
             let index = searchResults.firstIndex(where: { $0.title  == favorite.title })
@@ -72,20 +71,20 @@ final class MovieSearchViewModel {
         }
     }
     
-    private func changeBookmarkState(at index: Int?, to state: Bool) {
-        guard let index = index else { return }
-        searchResults[index].isBookmarked = state
-    }
-    
     private func toggleBookmarkState(at index: Int) {
         let currentBookmarkState = self.searchResults[index].isBookmarked
         if currentBookmarkState == true {
-            self.searchResults[index].isBookmarked = false
+            changeBookmarkState(at: index, to: false)
             movieSearchUseCase.deleteBookmarkedMovie(with: self.searchResults[index].title)
         } else {
-            self.searchResults[index].isBookmarked = true
+            changeBookmarkState(at: index, to: true)
             movieSearchUseCase.saveBookmarkedMovie(self.searchResults[index])
         }
+    }
+    
+    private func changeBookmarkState(at index: Int?, to state: Bool) {
+        guard let index = index else { return }
+        searchResults[index].isBookmarked = state
     }
 }
 
