@@ -119,9 +119,7 @@
 		47895B98286A4CBB0031DD91 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				47895B9C286A4DFD0031DD91 /* MovieCoreDataDTO+CoreDataClass.swift */,
-				47895B9D286A4DFD0031DD91 /* MovieCoreDataDTO+CoreDataProperties.swift */,
-				47895B99286A4D0C0031DD91 /* MovieCoreDataDTO.xcdatamodeld */,
+				47D7D251286AEA2D004D3F43 /* CoreDataDTO */,
 				47EE0DEF286A63D500846EE9 /* CoreDataManager.swift */,
 			);
 			path = CoreData;
@@ -152,7 +150,6 @@
 				479CD1C62869A2FB00ABD0AB /* Data */,
 				479CD1BC28699A0100ABD0AB /* Extensions */,
 				479CD1AA28698C6B00ABD0AB /* Application */,
-				479CD19E286985EA00ABD0AB /* LaunchScreen.storyboard */,
 				479CD1AB28698C8A00ABD0AB /* Resources */,
 			);
 			path = MovieSearch;
@@ -170,6 +167,7 @@
 		479CD1AB28698C8A00ABD0AB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				479CD19E286985EA00ABD0AB /* LaunchScreen.storyboard */,
 				479CD19C286985EA00ABD0AB /* Assets.xcassets */,
 				479CD1A1286985EA00ABD0AB /* Info.plist */,
 			);
@@ -201,8 +199,8 @@
 		479CD1B42869971A00ABD0AB /* Domain */ = {
 			isa = PBXGroup;
 			children = (
-				479CD1DD286A12CC00ABD0AB /* UseCase */,
 				479CD1B52869972600ABD0AB /* Entitiy */,
+				479CD1DD286A12CC00ABD0AB /* UseCase */,
 			);
 			path = Domain;
 			sourceTree = "<group>";
@@ -265,14 +263,10 @@
 		479CD1CD2869C18B00ABD0AB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				479CD1CE2869C19700ABD0AB /* MovieInformationView.swift */,
-				479CD1D82869D25200ABD0AB /* MovieCell.swift */,
-				479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */,
-				477A76DF286A17630028A292 /* MovieSearchViewModel.swift */,
-				47895B92286A37140031DD91 /* MovieDetailViewController.swift */,
-				47EE0DF3286A802F00846EE9 /* MovieDetailViewModel.swift */,
-				47D7D248286A8CCC004D3F43 /* BookmarkListViewController.swift */,
-				47D7D24C286A9D5D004D3F43 /* BookmarkListViewModel.swift */,
+				47D7D24E286AE9A3004D3F43 /* MovieSearchView */,
+				47D7D250286AE9CE004D3F43 /* MovieDetailView */,
+				47D7D24F286AE9B7004D3F43 /* BookmarkListView */,
+				47D7D252286AEA88004D3F43 /* Common */,
 				479CD1DA2869FDBD00ABD0AB /* Protocol */,
 			);
 			path = View;
@@ -295,6 +289,52 @@
 				47D7D24A286A9B33004D3F43 /* BookmarkListUseCase.swift */,
 			);
 			path = UseCase;
+			sourceTree = "<group>";
+		};
+		47D7D24E286AE9A3004D3F43 /* MovieSearchView */ = {
+			isa = PBXGroup;
+			children = (
+				479CD197286985EA00ABD0AB /* MovieSearchViewController.swift */,
+				477A76DF286A17630028A292 /* MovieSearchViewModel.swift */,
+			);
+			path = MovieSearchView;
+			sourceTree = "<group>";
+		};
+		47D7D24F286AE9B7004D3F43 /* BookmarkListView */ = {
+			isa = PBXGroup;
+			children = (
+				47D7D248286A8CCC004D3F43 /* BookmarkListViewController.swift */,
+				47D7D24C286A9D5D004D3F43 /* BookmarkListViewModel.swift */,
+			);
+			path = BookmarkListView;
+			sourceTree = "<group>";
+		};
+		47D7D250286AE9CE004D3F43 /* MovieDetailView */ = {
+			isa = PBXGroup;
+			children = (
+				47895B92286A37140031DD91 /* MovieDetailViewController.swift */,
+				47EE0DF3286A802F00846EE9 /* MovieDetailViewModel.swift */,
+			);
+			path = MovieDetailView;
+			sourceTree = "<group>";
+		};
+		47D7D251286AEA2D004D3F43 /* CoreDataDTO */ = {
+			isa = PBXGroup;
+			children = (
+				47895B9C286A4DFD0031DD91 /* MovieCoreDataDTO+CoreDataClass.swift */,
+				47895B9D286A4DFD0031DD91 /* MovieCoreDataDTO+CoreDataProperties.swift */,
+				47895B99286A4D0C0031DD91 /* MovieCoreDataDTO.xcdatamodeld */,
+			);
+			path = CoreDataDTO;
+			sourceTree = "<group>";
+		};
+		47D7D252286AEA88004D3F43 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				479CD1D82869D25200ABD0AB /* MovieCell.swift */,
+				479CD1CE2869C19700ABD0AB /* MovieInformationView.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
