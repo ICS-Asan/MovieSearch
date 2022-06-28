@@ -4,7 +4,7 @@ import RxSwift
 
 final class CoreDataManager {
     static let shared = CoreDataManager()
-    private let persistentContainer = NSPersistentCloudKitContainer(name: "MovieCoreDataDTO")
+    private let persistentContainer = NSPersistentCloudKitContainer(name: MovieCoreDataDTO.entityName)
     private(set) lazy var context = persistentContainer.viewContext
     
     private init() {
@@ -61,7 +61,7 @@ final class CoreDataManager {
         saveContextChange()
     }
     
-    func saveContextChange() {
+    private func saveContextChange() {
         if context.hasChanges {
             do {
                 try context.save()

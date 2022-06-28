@@ -3,8 +3,9 @@ import CoreData
 
 
 extension MovieCoreDataDTO {
+    static let entityName = String(describing: MovieCoreDataDTO.self)
     @nonobjc public class func fetchRequest() -> NSFetchRequest<MovieCoreDataDTO> {
-        return NSFetchRequest<MovieCoreDataDTO>(entityName: "MovieCoreDataDTO")
+        return NSFetchRequest<MovieCoreDataDTO>(entityName: MovieCoreDataDTO.entityName)
     }
 
     @NSManaged public var title: String?
