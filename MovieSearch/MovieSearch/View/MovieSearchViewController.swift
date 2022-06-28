@@ -79,6 +79,7 @@ class MovieSearchViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: viewTitleLable)
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
+        bookmarkButton.addTarget(self, action: #selector(presentBookmarkListView), for: .touchDown)
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
@@ -89,6 +90,13 @@ class MovieSearchViewController: UIViewController {
                 self?.viewWillAppearObserver.onNext(data)
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc private func presentBookmarkListView() {
+        let destination = UINavigationController(rootViewController: BookmarkListViewController())
+        destination.view.backgroundColor = .systemBackground
+        destination.modalPresentationStyle = .fullScreen
+        present(destination, animated: true)
     }
 }
 
