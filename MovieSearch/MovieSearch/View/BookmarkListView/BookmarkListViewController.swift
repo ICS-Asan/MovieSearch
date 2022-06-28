@@ -112,6 +112,7 @@ extension BookmarkListViewController {
                 self?.fetchBookmarkedMovie()
             }
             cell.setupCell(with: item)
+            
             return cell
         }
         bookmarkCollectionView.dataSource = dataSource

@@ -151,6 +151,7 @@ extension MovieSearchViewController {
                 self.didTabBookmarkButton.onNext(indexPath.row)
             }
             cell.setupCell(with: item)
+            
             return cell
         }
         movieCollectionView.dataSource = dataSource
@@ -193,6 +194,5 @@ extension MovieSearchViewController: UICollectionViewDelegate {
         let destination = MovieDetailViewController()
         navigationController?.pushViewController(destination, animated: true)
         destination.setupDetailView(with: movie)
-        
     }
 }

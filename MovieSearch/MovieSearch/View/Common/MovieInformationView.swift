@@ -4,6 +4,7 @@ import SDWebImage
 
 final class MovieInformationView: UIView {
     var changeBookmarkState: (() -> Void)?
+    
     private var isBookmarked: Bool {
         return bookmarkButton.tintColor == .systemYellow
     }
@@ -111,16 +112,11 @@ final class MovieInformationView: UIView {
         }
     }
     
-    
     private func commonInit() {
         setupPosterImageViewLayout()
         setupTextInformationStackViewLayout()
         setupBookmarkButtonLayout()
         setupBookmarkButtonAction()
-    }
-    
-    private func setupBookmarkButtonAction() {
-        bookmarkButton.addTarget(self, action: #selector(didTabBookmarkButton), for: .touchDown)
     }
     
     private func setupPosterImageViewLayout() {
@@ -154,6 +150,10 @@ final class MovieInformationView: UIView {
         bookmarkButton.snp.makeConstraints { make in
             make.top.trailing.equalToSuperview()
         }
+    }
+    
+    private func setupBookmarkButtonAction() {
+        bookmarkButton.addTarget(self, action: #selector(didTabBookmarkButton), for: .touchDown)
     }
     
     @objc private func didTabBookmarkButton() {
