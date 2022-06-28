@@ -1,7 +1,7 @@
 import UIKit
 
 enum MovieCollectionViewLayout {
-    static let list: UICollectionViewLayout = {
+    static func list() -> UICollectionViewLayout {
         let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
                                                             layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
             let itemsize = NSCollectionLayoutSize(widthDimension: Design.Size.itemWidth,
@@ -15,5 +15,5 @@ enum MovieCollectionViewLayout {
             return section
         }
         return layout
-    }()
+    }
 }

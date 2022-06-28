@@ -38,7 +38,7 @@ class MovieSearchViewController: UIViewController {
         return searchController
     }()
     
-    private var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list)
+    private var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list())
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
