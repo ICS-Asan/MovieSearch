@@ -77,4 +77,12 @@ extension BookmarkListViewController {
         }
         bookmarkCollectionView.dataSource = dataSource
     }
+    
+    private func populate(movie: [Movie]?) {
+        guard let movie = movie else { return }
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
+        snapshot.appendSections([.list])
+        snapshot.appendItems(movie, toSection: .list)
+        dataSource?.apply(snapshot)
+    }
 }
