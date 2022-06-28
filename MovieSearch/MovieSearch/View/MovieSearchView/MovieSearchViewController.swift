@@ -38,7 +38,7 @@ class MovieSearchViewController: UIViewController {
         return searchController
     }()
     
-    private var movieCollectionView: UICollectionView!
+    private var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list)
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
@@ -111,31 +111,17 @@ class MovieSearchViewController: UIViewController {
 
 extension MovieSearchViewController {
     private func setupHomeCollectionView() {
-        movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createCollectionViewLayout())
+        setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
-        setupCollectionViewConstraints()
         movieCollectionView.delegate = self
     }
     
-    private func createCollectionViewLayout() -> UICollectionViewLayout {
-        let layout = UICollectionViewCompositionalLayout { (sectionIndex: Int,
-                                                            layoutEnvironment: NSCollectionLayoutEnvironment) -> NSCollectionLayoutSection? in
-            return self.creatListSectionLayout()
+    private func setupCollectionViewConstraints() {
+        view.addSubview(movieCollectionView)
+        movieCollectionView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
         }
-        return layout
-    }
-
-    private func creatListSectionLayout() -> NSCollectionLayoutSection {
-        let itemsize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                              heightDimension: .estimated(120))
-        let item = NSCollectionLayoutItem(layoutSize: itemsize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: itemsize.widthDimension,
-                                               heightDimension: itemsize.heightDimension)
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
-        let section = NSCollectionLayoutSection(group: group)
-        
-        return section
     }
     
     private func registerCollectionViewCell() {
@@ -155,13 +141,6 @@ extension MovieSearchViewController {
             return cell
         }
         movieCollectionView.dataSource = dataSource
-    }
-    
-    private func setupCollectionViewConstraints() {
-        view.addSubview(movieCollectionView)
-        movieCollectionView.snp.makeConstraints { make in
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
     }
     
     private func populate(movie: [Movie]?) {
