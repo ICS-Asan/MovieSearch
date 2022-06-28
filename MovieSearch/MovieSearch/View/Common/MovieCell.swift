@@ -33,12 +33,12 @@ final class MovieCell: UICollectionViewCell {
     private func drawUnderLine() {
         let underLine = CALayer()
         underLine.frame = CGRect(
-            x: 0,
+            x: 10,
             y: contentView.frame.height,
-            width: contentView.frame.width,
+            width: contentView.frame.width - 20,
             height: 1
         )
-        underLine.backgroundColor = Design.Color.border
+        underLine.backgroundColor = Design.Color.cellDivider
         layer.addSublayer(underLine)
     }
 }

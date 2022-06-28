@@ -22,6 +22,7 @@ enum Design {
         static let border = UIColor.secondarySystemBackground.cgColor
         static let bookmarkedButton = UIColor.systemYellow
         static let normalButton = UIColor.systemGray5
+        static let cellDivider = UIColor.systemGray4.cgColor
     }
     
     enum Image {
