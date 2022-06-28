@@ -20,6 +20,13 @@ final class MovieSearchViewModel {
             .searchMovieObserver
             .subscribe(onNext: { [weak self] data in
                 self?.storeSearchResult(with: data)
+                self?.applyBookmarkState()
+            })
+            .disposed(by: disposeBag)
+        input
+            .didTabBookmarkButton
+            .subscribe(onNext: { [weak self] index in
+                self?.toggleBookmarkState(at: index)
             })
             .disposed(by: disposeBag)
 
@@ -43,19 +50,45 @@ final class MovieSearchViewModel {
     func fetchSearchResult(with word: String) -> Observable<MovieSearchInformation?> {
         movieSearchUseCase.fetchMovieSearchInformation(with: word)
     }
+    
+    private func applyBookmarkState() {
+        bookmarkedMovie.forEach { favorite in
+            let index = searchResults.firstIndex(where: { $0.title  == favorite.title })
+            changeBookmarkState(at: index)
+        }
+    }
+    
+    private func changeBookmarkState(at index: Int?) {
+        guard let index = index else { return }
+        searchResults[index].isBookmarked = true
+    }
+    
+    private func toggleBookmarkState(at index: Int) {
+        var movie = self.searchResults[index]
+        let currentBookmarkState = movie.isBookmarked
+        if currentBookmarkState == true {
+            movieSearchUseCase.deleteBookmarkedMovie(with: movie.title)
+        } else {
+            movie.isBookmarked = true
+            movieSearchUseCase.saveBookmarkedMovie(movie)
+        }
+    }
 }
 
 extension MovieSearchViewModel {
     final class Input {
         let viewWillAppearObserver: Observable<[Movie]>
         let searchMovieObserver: Observable<MovieSearchInformation?>
+        let didTabBookmarkButton: Observable<Int>
 
         init(
             viewWillAppearObserver: Observable<[Movie]>,
-            searchMovieObserver: Observable<MovieSearchInformation?>
+            searchMovieObserver: Observable<MovieSearchInformation?>,
+            didTabBookmarkButton: Observable<Int>
         ) {
             self.viewWillAppearObserver = viewWillAppearObserver
             self.searchMovieObserver = searchMovieObserver
+            self.didTabBookmarkButton = didTabBookmarkButton
         }
     }
 

@@ -42,6 +42,7 @@ class MovieSearchViewController: UIViewController {
     private let viewModel = MovieSearchViewModel()
     private let viewWillAppearObserver: PublishSubject<[Movie]> = .init()
     private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
+    private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init() {
@@ -62,17 +63,14 @@ class MovieSearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.fetchBookmarkedMovie()
-            .subscribe(onNext: { [weak self] data in
-                self?.viewWillAppearObserver.onNext(data)
-            })
-            .disposed(by: disposeBag)
+        fetchBookmarkedMovie()
     }
     
     private func bind() {
         let input = MovieSearchViewModel.Input(
             viewWillAppearObserver: viewWillAppearObserver,
-            searchMovieObserver: searchMovieObserver
+            searchMovieObserver: searchMovieObserver,
+            didTabBookmarkButton: didTabBookmarkButton
         )
         let _ = viewModel.transform(input)
     }
@@ -82,6 +80,14 @@ class MovieSearchViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
+    }
+    
+    private func fetchBookmarkedMovie() {
+        viewModel.fetchBookmarkedMovie()
+            .subscribe(onNext: { [weak self] data in
+                self?.viewWillAppearObserver.onNext(data)
+            })
+            .disposed(by: disposeBag)
     }
 }
 
@@ -123,6 +129,9 @@ extension MovieSearchViewController {
             guard let cell = collectionView.dequeueReusableCell(MovieCell.self, for: indexPath) else {
                 return UICollectionViewCell()
             }
+            cell.containerView.changeBookmarkState = {
+                self.didTabBookmarkButton.onNext(indexPath.row)
+            }
             cell.setupCell(with: item)
             return cell
         }
@@ -156,6 +165,7 @@ extension MovieSearchViewController: UISearchBarDelegate {
                 self?.populate(movie: self?.viewModel.searchResults)
             })
             .disposed(by: disposeBag)
+        fetchBookmarkedMovie()
     }
 }
 
