@@ -10,6 +10,7 @@ class BookmarkListViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = BookmarkListViewModel()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
+    private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init() {
@@ -31,12 +32,13 @@ class BookmarkListViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchBookmarkedMovie()
-        populate(movie: viewModel.bookmarkedMovie)
+        
     }
     
     private func bind() {
         let input = BookmarkListViewModel.Input(
-            loadBookmarkedMovie: loadBookmarkedMovie
+            loadBookmarkedMovie: loadBookmarkedMovie,
+            didTabBookmarkButton: didTabBookmarkButton
         )
         let _ = viewModel.transform(input)
     }
@@ -52,6 +54,7 @@ class BookmarkListViewController: UIViewController {
                 self?.loadBookmarkedMovie.onNext(data)
             })
             .disposed(by: disposeBag)
+        populate(movie: viewModel.bookmarkedMovie)
     }
     
     @objc private func dismissView() {
@@ -103,6 +106,10 @@ extension BookmarkListViewController {
         dataSource = UICollectionViewDiffableDataSource<Section, Movie>(collectionView: bookmarkCollectionView) { collectionView, indexPath, item in
             guard let cell = collectionView.dequeueReusableCell(MovieCell.self, for: indexPath) else {
                 return UICollectionViewCell()
+            }
+            cell.containerView.changeBookmarkState = { [weak self] in
+                self?.didTabBookmarkButton.onNext(indexPath.row)
+                self?.fetchBookmarkedMovie()
             }
             cell.setupCell(with: item)
             return cell
