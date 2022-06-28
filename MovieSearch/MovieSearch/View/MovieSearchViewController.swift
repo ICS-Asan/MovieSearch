@@ -5,6 +5,7 @@ class MovieSearchViewController: UIViewController {
     private enum Section {
         case list
     }
+    
     private let viewTitleLable: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title2).bold
@@ -40,7 +41,7 @@ class MovieSearchViewController: UIViewController {
     private var movieCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
-    private let viewWillAppearObserver: PublishSubject<[Movie]> = .init()
+    private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
     private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
     private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let disposeBag: DisposeBag = .init()
@@ -67,9 +68,17 @@ class MovieSearchViewController: UIViewController {
         populate(movie: viewModel.searchResults)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        viewModel.resetBookmarkState()
+            .subscribe(onNext: { [weak self] movies in
+                self?.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+    }
+    
     private func bind() {
         let input = MovieSearchViewModel.Input(
-            viewWillAppearObserver: viewWillAppearObserver,
+            loadBookmarkedMovie: loadBookmarkedMovie,
             searchMovieObserver: searchMovieObserver,
             didTabBookmarkButton: didTabBookmarkButton
         )
@@ -79,6 +88,7 @@ class MovieSearchViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: viewTitleLable)
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
+        bookmarkButton.addTarget(self, action: #selector(presentBookmarkListView), for: .touchDown)
         navigationItem.searchController = searchController
         searchController.searchBar.delegate = self
     }
@@ -86,9 +96,16 @@ class MovieSearchViewController: UIViewController {
     private func fetchBookmarkedMovie() {
         viewModel.fetchBookmarkedMovie()
             .subscribe(onNext: { [weak self] data in
-                self?.viewWillAppearObserver.onNext(data)
+                self?.loadBookmarkedMovie.onNext(data)
             })
             .disposed(by: disposeBag)
+    }
+    
+    @objc private func presentBookmarkListView() {
+        let destination = UINavigationController(rootViewController: BookmarkListViewController())
+        destination.view.backgroundColor = .systemBackground
+        destination.modalPresentationStyle = .fullScreen
+        present(destination, animated: true)
     }
 }
 
