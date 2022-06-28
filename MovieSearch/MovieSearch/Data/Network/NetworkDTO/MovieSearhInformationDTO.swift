@@ -9,6 +9,7 @@ struct MovieSearhInformationDTO: Codable {
     
     func toDomain() -> MovieSearchInformation {
         let movies = items.map { $0.toDomain() }
+        
         return MovieSearchInformation(
             lastBuildDate: lastBuildDate,
             total: total,

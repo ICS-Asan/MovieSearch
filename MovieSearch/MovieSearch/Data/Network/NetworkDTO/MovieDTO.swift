@@ -27,6 +27,7 @@ extension MovieDTO {
     private func convertCorrectTitle(from previousTitle: String) -> String {
         var convertedTitle = previousTitle.replacingOccurrences(of: "<b>", with: "")
         convertedTitle = convertedTitle.replacingOccurrences(of: "</b>", with: "")
+        
         return convertedTitle
     }
     
