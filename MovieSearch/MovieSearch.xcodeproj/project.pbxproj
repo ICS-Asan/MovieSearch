@@ -125,9 +125,9 @@
 		47895B98286A4CBB0031DD91 /* CoreData */ = {
 			isa = PBXGroup;
 			children = (
-				47D7D251286AEA2D004D3F43 /* CoreDataDTO */,
 				47EE0DEF286A63D500846EE9 /* CoreDataManager.swift */,
 				47D7D253286AEDF2004D3F43 /* CoreDataError.swift */,
+				47D7D251286AEA2D004D3F43 /* CoreDataDTO */,
 			);
 			path = CoreData;
 			sourceTree = "<group>";
@@ -270,11 +270,11 @@
 		479CD1CD2869C18B00ABD0AB /* View */ = {
 			isa = PBXGroup;
 			children = (
-				47D7D257286B010F004D3F43 /* Utility */,
 				47D7D24E286AE9A3004D3F43 /* MovieSearchView */,
 				47D7D250286AE9CE004D3F43 /* MovieDetailView */,
 				47D7D24F286AE9B7004D3F43 /* BookmarkListView */,
 				47D7D252286AEA88004D3F43 /* Common */,
+				47D7D257286B010F004D3F43 /* Utility */,
 				479CD1DA2869FDBD00ABD0AB /* Protocol */,
 			);
 			path = View;
