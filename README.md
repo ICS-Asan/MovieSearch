@@ -1,5 +1,4 @@
 # MovieSearch
-# MovieSearch
 - 네이버 영화 API를 활용한 영화 검색 어플리케이션
 ### 개발 환경
 - 프로그램 <img src="https://img.shields.io/badge/xcode-v13.4.1-white?logo=xcode&logoColor=skyblue"/>
