@@ -11,7 +11,7 @@ final class MovieSearchViewModel {
     
     func transform(_ input: Input) -> Output {
         input
-            .viewWillAppearObserver
+            .loadBookmarkedMovie
             .subscribe(onNext: { [weak self] data in
                 self?.storeBookmarkedMovie(movies: data)
                 self?.applyBookmarkState()
@@ -78,16 +78,16 @@ final class MovieSearchViewModel {
 
 extension MovieSearchViewModel {
     final class Input {
-        let viewWillAppearObserver: Observable<[Movie]>
+        let loadBookmarkedMovie: Observable<[Movie]>
         let searchMovieObserver: Observable<MovieSearchInformation?>
         let didTabBookmarkButton: Observable<Int>
 
         init(
-            viewWillAppearObserver: Observable<[Movie]>,
+            loadBookmarkedMovie: Observable<[Movie]>,
             searchMovieObserver: Observable<MovieSearchInformation?>,
             didTabBookmarkButton: Observable<Int>
         ) {
-            self.viewWillAppearObserver = viewWillAppearObserver
+            self.loadBookmarkedMovie = loadBookmarkedMovie
             self.searchMovieObserver = searchMovieObserver
             self.didTabBookmarkButton = didTabBookmarkButton
         }

@@ -1,4 +1,5 @@
 import UIKit
+import RxSwift
 
 class BookmarkListViewController: UIViewController {
     private enum Section {
@@ -7,6 +8,19 @@ class BookmarkListViewController: UIViewController {
     
     private var bookmarkCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
+    private let viewModel = BookmarkListViewModel()
+    private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
+    private let disposeBag: DisposeBag = .init()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        bind()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        bind()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -16,11 +30,28 @@ class BookmarkListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        fetchBookmarkedMovie()
+        populate(movie: viewModel.bookmarkedMovie)
+    }
+    
+    private func bind() {
+        let input = BookmarkListViewModel.Input(
+            loadBookmarkedMovie: loadBookmarkedMovie
+        )
+        let _ = viewModel.transform(input)
     }
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissView))
         navigationItem.title = "즐겨찾기 목록"
+    }
+    
+    private func fetchBookmarkedMovie() {
+        viewModel.fetchBookmarkedMovie()
+            .subscribe(onNext: { [weak self] data in
+                self?.loadBookmarkedMovie.onNext(data)
+            })
+            .disposed(by: disposeBag)
     }
     
     @objc private func dismissView() {

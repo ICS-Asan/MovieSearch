@@ -41,7 +41,7 @@ class MovieSearchViewController: UIViewController {
     private var movieCollectionView: UICollectionView!
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
-    private let viewWillAppearObserver: PublishSubject<[Movie]> = .init()
+    private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
     private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
     private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let disposeBag: DisposeBag = .init()
@@ -70,7 +70,7 @@ class MovieSearchViewController: UIViewController {
     
     private func bind() {
         let input = MovieSearchViewModel.Input(
-            viewWillAppearObserver: viewWillAppearObserver,
+            loadBookmarkedMovie: loadBookmarkedMovie,
             searchMovieObserver: searchMovieObserver,
             didTabBookmarkButton: didTabBookmarkButton
         )
@@ -88,7 +88,7 @@ class MovieSearchViewController: UIViewController {
     private func fetchBookmarkedMovie() {
         viewModel.fetchBookmarkedMovie()
             .subscribe(onNext: { [weak self] data in
-                self?.viewWillAppearObserver.onNext(data)
+                self?.loadBookmarkedMovie.onNext(data)
             })
             .disposed(by: disposeBag)
     }
