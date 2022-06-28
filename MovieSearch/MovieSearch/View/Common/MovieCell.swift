@@ -20,6 +20,7 @@ final class MovieCell: UICollectionViewCell {
     
     private func commonInit() {
         setupContainerViewLayout()
+        drawUnderLine()
     }
     
     private func setupContainerViewLayout() {
@@ -27,5 +28,17 @@ final class MovieCell: UICollectionViewCell {
         containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)
         }
+    }
+    
+    private func drawUnderLine() {
+        let underLine = CALayer()
+        underLine.frame = CGRect(
+            x: 0,
+            y: contentView.frame.height,
+            width: contentView.frame.width,
+            height: 1
+        )
+        underLine.backgroundColor = Design.Color.border
+        layer.addSublayer(underLine)
     }
 }
