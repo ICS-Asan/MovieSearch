@@ -9,6 +9,7 @@ class MovieDetailViewController: UIViewController {
     private let webView = WKWebView(frame: .zero)
     private let viewModel = MovieDetailViewModel()
     private let setupViewObserver: PublishSubject<Movie> = .init()
+    private let didTabBookmarkButton: PublishSubject<Void> = .init()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -38,7 +39,8 @@ class MovieDetailViewController: UIViewController {
     
     private func bind() {
         let input = MovieDetailViewModel.Input(
-            setupViewObserver: setupViewObserver
+            setupViewObserver: setupViewObserver,
+            didTabBookmarkButton: didTabBookmarkButton
         )
         let _ = viewModel.transform(input)
     }
@@ -61,6 +63,7 @@ class MovieDetailViewController: UIViewController {
     private func setupHeaderView(with movie: Movie) {
         let movieInformationView = MovieInformationView()
         movieInformationView.setupView(with: movie)
+        movieInformationView.changeBookmarkState = { self.didTabBookmarkButton.onNext(()) }
         headerView.addSubview(movieInformationView)
         movieInformationView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(10)

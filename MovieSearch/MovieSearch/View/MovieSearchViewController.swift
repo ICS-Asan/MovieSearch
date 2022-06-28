@@ -64,6 +64,7 @@ class MovieSearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchBookmarkedMovie()
+        populate(movie: viewModel.searchResults)
     }
     
     private func bind() {

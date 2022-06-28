@@ -11,7 +11,12 @@ final class MovieDetailViewModel {
             .setupViewObserver
             .subscribe(onNext: { [weak self] movie in
                 self?.receiveCurrentMovie(movie)
-                print(self?.currentMovie?.title)
+            })
+            .disposed(by: disposeBag)
+        input
+            .didTabBookmarkButton
+            .subscribe(onNext: { [weak self] in
+                self?.toggleBookmarkState()
             })
             .disposed(by: disposeBag)
         
@@ -21,16 +26,30 @@ final class MovieDetailViewModel {
     private func receiveCurrentMovie(_ movie: Movie) {
         currentMovie = movie
     }
+    
+    private func toggleBookmarkState() {
+        guard let currentMovie = currentMovie else { return }
+        let currentBookmarkState = currentMovie.isBookmarked
+        if currentBookmarkState == true {
+            movieDetailUseCase.deleteBookmarkedMovie(with: currentMovie.title)
+        } else {
+            var movie = currentMovie
+            movie.isBookmarked = true
+            movieDetailUseCase.saveBookmarkedMovie(movie)
+        }
+    }
 }
 
 extension MovieDetailViewModel {
     final class Input {
         let setupViewObserver: Observable<Movie>
-
+        let didTabBookmarkButton: Observable<Void>
         init(
-            setupViewObserver: Observable<Movie>
+            setupViewObserver: Observable<Movie>,
+            didTabBookmarkButton: Observable<Void>
         ) {
             self.setupViewObserver = setupViewObserver
+            self.didTabBookmarkButton = didTabBookmarkButton
         }
     }
 

@@ -14,6 +14,7 @@ final class MovieSearchViewModel {
             .viewWillAppearObserver
             .subscribe(onNext: { [weak self] data in
                 self?.storeBookmarkedMovie(movies: data)
+                self?.applyBookmarkState()
             })
             .disposed(by: disposeBag)
         input
@@ -64,13 +65,13 @@ final class MovieSearchViewModel {
     }
     
     private func toggleBookmarkState(at index: Int) {
-        var movie = self.searchResults[index]
-        let currentBookmarkState = movie.isBookmarked
+        let currentBookmarkState = self.searchResults[index].isBookmarked
         if currentBookmarkState == true {
-            movieSearchUseCase.deleteBookmarkedMovie(with: movie.title)
+            self.searchResults[index].isBookmarked = false
+            movieSearchUseCase.deleteBookmarkedMovie(with: self.searchResults[index].title)
         } else {
-            movie.isBookmarked = true
-            movieSearchUseCase.saveBookmarkedMovie(movie)
+            self.searchResults[index].isBookmarked = true
+            movieSearchUseCase.saveBookmarkedMovie(self.searchResults[index])
         }
     }
 }
