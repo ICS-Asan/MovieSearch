@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 
 class MovieSearchViewController: UIViewController {
     private enum Section {
@@ -42,7 +43,7 @@ class MovieSearchViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
-    private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
+    private let searchMovieObserver: PublishSubject<String> = .init()
     private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let disposeBag: DisposeBag = .init()
     
@@ -60,6 +61,24 @@ class MovieSearchViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupHomeCollectionView()
+        
+        searchController.searchBar.rx.text.orEmpty
+            .withUnretained(self)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (_, searchWord) in
+                self.searchMovieObserver.onNext(searchWord)
+            })
+            .disposed(by: disposeBag)
+        
+        movieCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, indexPath) in
+                let movie = owner.viewModel.searchResults[indexPath.row]
+                let destination = MovieDetailViewController()
+                owner.navigationController?.pushViewController(destination, animated: true)
+                destination.setupDetailView(with: movie)
+            })
+            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,7 +101,14 @@ class MovieSearchViewController: UIViewController {
             searchMovieObserver: searchMovieObserver,
             didTabBookmarkButton: didTabBookmarkButton
         )
-        let _ = viewModel.transform(input)
+        let output = viewModel.transform(input)
+        output.movieItemsObservable
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupNavigationBar() {
@@ -90,7 +116,6 @@ class MovieSearchViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
         bookmarkButton.addTarget(self, action: #selector(presentBookmarkListView), for: .touchDown)
         navigationItem.searchController = searchController
-        searchController.searchBar.delegate = self
     }
     
     private func fetchBookmarkedMovie() {
@@ -114,7 +139,6 @@ extension MovieSearchViewController {
         setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
-        movieCollectionView.delegate = self
     }
     
     private func setupCollectionViewConstraints() {
@@ -149,29 +173,5 @@ extension MovieSearchViewController {
         snapshot.appendSections([.list])
         snapshot.appendItems(movie, toSection: .list)
         dataSource?.apply(snapshot)
-    }
-}
-
-extension MovieSearchViewController: UISearchBarDelegate {
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        guard let searchWord = searchBar.searchTextField.text,
-              searchWord.isEmpty == false else { return }
-        viewModel.fetchSearchResult(with: searchWord)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] result in
-                self?.searchMovieObserver.onNext(result)
-                self?.populate(movie: self?.viewModel.searchResults)
-            })
-            .disposed(by: disposeBag)
-        fetchBookmarkedMovie()
-    }
-}
-
-extension MovieSearchViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = viewModel.searchResults[indexPath.row]
-        let destination = MovieDetailViewController()
-        navigationController?.pushViewController(destination, animated: true)
-        destination.setupDetailView(with: movie)
     }
 }
