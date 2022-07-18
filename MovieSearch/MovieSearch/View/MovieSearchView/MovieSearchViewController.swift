@@ -63,24 +63,6 @@ class MovieSearchViewController: UIViewController {
         super.viewDidLoad()
         setupNavigationBar()
         setupHomeCollectionView()
-        
-        searchController.searchBar.rx.text.orEmpty
-            .withUnretained(self)
-            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
-            .subscribe(onNext: { (_, searchWord) in
-                self.searchMovieObserver.onNext(searchWord)
-            })
-            .disposed(by: disposeBag)
-        
-        movieCollectionView.rx.itemSelected
-            .withUnretained(self)
-            .subscribe(onNext: { (owner, indexPath) in
-                let movie = owner.viewModel.searchResults[indexPath.row]
-                let destination = MovieDetailViewController()
-                owner.navigationController?.pushViewController(destination, animated: true)
-                destination.setupDetailView(with: movie)
-            })
-            .disposed(by: disposeBag)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -94,6 +76,9 @@ class MovieSearchViewController: UIViewController {
     }
     
     private func bind() {
+        bindSearchBar()
+        bindCollectionView()
+        
         let input = MovieSearchViewModel.Input(
             loadBookmarkedMovie: loadBookmarkedMovie,
             searchMovieObserver: searchMovieObserver,
@@ -115,6 +100,28 @@ class MovieSearchViewController: UIViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner, movies) in
                 owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindSearchBar() {
+        searchController.searchBar.rx.text.orEmpty
+            .withUnretained(self)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (_, searchWord) in
+                self.searchMovieObserver.onNext(searchWord)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindCollectionView() {
+        movieCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, indexPath) in
+                let movie = owner.viewModel.searchResults[indexPath.row]
+                let destination = MovieDetailViewController()
+                owner.navigationController?.pushViewController(destination, animated: true)
+                destination.setupDetailView(with: movie)
             })
             .disposed(by: disposeBag)
     }
