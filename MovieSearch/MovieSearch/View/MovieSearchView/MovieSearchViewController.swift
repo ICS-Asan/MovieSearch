@@ -45,6 +45,8 @@ class MovieSearchViewController: UIViewController {
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
     private let searchMovieObserver: PublishSubject<String> = .init()
     private let didTabBookmarkButton: PublishSubject<Int> = .init()
+    private let viewWillAppearObservable: PublishSubject<Void> = .init()
+    private let viewWillDisappearObservable: PublishSubject<Void> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init() {
@@ -83,26 +85,31 @@ class MovieSearchViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchBookmarkedMovie()
-        populate(movie: viewModel.searchResults)
+        viewWillAppearObservable.onNext(())
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        viewModel.resetBookmarkState()
-            .subscribe(onNext: { [weak self] movies in
-                self?.populate(movie: movies)
-            })
-            .disposed(by: disposeBag)
+        viewWillDisappearObservable.onNext(())
     }
     
     private func bind() {
         let input = MovieSearchViewModel.Input(
             loadBookmarkedMovie: loadBookmarkedMovie,
             searchMovieObserver: searchMovieObserver,
-            didTabBookmarkButton: didTabBookmarkButton
+            didTabBookmarkButton: didTabBookmarkButton,
+            viewWillAppearObservable: viewWillAppearObservable,
+            viewWillDisappearObservable: viewWillDisappearObservable
         )
         let output = viewModel.transform(input)
         output.movieItemsObservable
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+        
+        output.reloadMovieItemsObservable
             .observe(on: MainScheduler.asyncInstance)
             .withUnretained(self)
             .subscribe(onNext: { (owner, movies) in
@@ -172,6 +179,7 @@ extension MovieSearchViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
         snapshot.appendSections([.list])
         snapshot.appendItems(movie, toSection: .list)
+        snapshot.reloadItems(movie)
         dataSource?.apply(snapshot)
     }
 }
