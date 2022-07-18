@@ -67,19 +67,6 @@ final class MovieSearchViewModel {
         return movieSearchUseCase.fetchMovieSearchInformation(with: word)
     }
     
-    func resetBookmarkState() -> Observable<[Movie]?> {
-        return Observable.create { [weak self] emitter in
-            self?.bookmarkedMovie.forEach { favorite in
-                let index = self?.searchResults.firstIndex(where: { $0.title  == favorite.title })
-                self?.changeBookmarkState(at: index, to: false)
-            }
-            emitter.onNext(self?.searchResults)
-            emitter.onCompleted()
-            
-            return Disposables.create()
-        }
-    }
-    
     func resetBookmarkState() {
         if searchResults.isEmpty == true { return }
         for index in 0..<searchResults.count {
