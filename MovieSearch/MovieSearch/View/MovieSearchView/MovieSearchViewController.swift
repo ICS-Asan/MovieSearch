@@ -89,6 +89,7 @@ class MovieSearchViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
         viewWillDisappearObservable.onNext(())
     }
     
