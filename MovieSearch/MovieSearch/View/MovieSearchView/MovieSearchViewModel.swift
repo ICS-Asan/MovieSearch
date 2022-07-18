@@ -41,6 +41,7 @@ final class MovieSearchViewModel {
             }
         
         let reloadMovieItem = input.viewWillAppearObservable
+            .skip(1)
             .withUnretained(self)
             .flatMap { (owner, title) in
                 owner.movieSearchUseCase.fetchBookmarkedMovie()
