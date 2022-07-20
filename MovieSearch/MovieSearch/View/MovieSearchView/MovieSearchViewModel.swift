@@ -19,6 +19,7 @@ final class MovieSearchViewModel {
                 self.storeBookmarkedMovie(movies: bookmarkedMovies)
             })
             .disposed(by: disposeBag)
+        
         input
             .viewWillDisappearObservable
             .withUnretained(self)
