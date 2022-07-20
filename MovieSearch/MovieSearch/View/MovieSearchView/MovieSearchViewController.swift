@@ -42,8 +42,7 @@ class MovieSearchViewController: UIViewController {
     private var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list())
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
-    private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
-    private let searchMovieObserver: PublishSubject<String> = .init()
+    private let searchMovieObservable: PublishSubject<String> = .init()
     private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let viewWillAppearObservable: PublishSubject<Void> = .init()
     private let viewWillDisappearObservable: PublishSubject<Void> = .init()
@@ -80,8 +79,7 @@ class MovieSearchViewController: UIViewController {
         bindCollectionView()
         
         let input = MovieSearchViewModel.Input(
-            loadBookmarkedMovie: loadBookmarkedMovie,
-            searchMovieObserver: searchMovieObserver,
+            searchMovieObservable: searchMovieObservable,
             didTabBookmarkButton: didTabBookmarkButton,
             viewWillAppearObservable: viewWillAppearObservable,
             viewWillDisappearObservable: viewWillDisappearObservable
@@ -109,7 +107,7 @@ class MovieSearchViewController: UIViewController {
             .withUnretained(self)
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (_, searchWord) in
-                self.searchMovieObserver.onNext(searchWord)
+                self.searchMovieObservable.onNext(searchWord)
             })
             .disposed(by: disposeBag)
     }
@@ -131,14 +129,6 @@ class MovieSearchViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
         bookmarkButton.addTarget(self, action: #selector(presentBookmarkListView), for: .touchDown)
         navigationItem.searchController = searchController
-    }
-    
-    private func fetchBookmarkedMovie() {
-        viewModel.fetchBookmarkedMovie()
-            .subscribe(onNext: { [weak self] data in
-                self?.loadBookmarkedMovie.onNext(data)
-            })
-            .disposed(by: disposeBag)
     }
     
     @objc private func presentBookmarkListView() {
