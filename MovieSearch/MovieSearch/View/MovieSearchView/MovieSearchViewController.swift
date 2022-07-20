@@ -43,7 +43,7 @@ class MovieSearchViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
     private let searchMovieObservable: PublishSubject<String> = .init()
-    private let didTabBookmarkButton: PublishSubject<Int> = .init()
+    private let didTabBookmarkButton: PublishSubject<String> = .init()
     private let viewDidLoadObservable: PublishSubject<Void> = .init()
     private let viewWillAppearObservable: PublishSubject<Void> = .init()
     private let viewWillDisappearObservable: PublishSubject<Void> = .init()
@@ -99,6 +99,15 @@ class MovieSearchViewController: UIViewController {
         
         output
             .reloadMovieItemsObservable
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+        
+        output
+            .updateMovieItemsObservable
             .observe(on: MainScheduler.asyncInstance)
             .withUnretained(self)
             .subscribe(onNext: { (owner, movies) in
@@ -168,7 +177,7 @@ extension MovieSearchViewController {
                 return UICollectionViewCell()
             }
             cell.containerView.changeBookmarkState = {
-                self.didTabBookmarkButton.onNext(indexPath.row)
+                self.didTabBookmarkButton.onNext(item.title)
             }
             cell.setupCell(with: item)
             
