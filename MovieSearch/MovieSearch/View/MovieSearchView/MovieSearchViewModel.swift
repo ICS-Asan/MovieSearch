@@ -15,7 +15,18 @@ final class MovieSearchViewModel {
                 self?.toggleBookmarkState(at: index)
             })
             .disposed(by: disposeBag)
-        input.viewWillDisappearObservable
+        input
+            .viewDidLoadObservable
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.fetchBookmarkedMovie()
+            }
+            .subscribe(onNext: { bookmarkedMovies in
+                self.storeBookmarkedMovie(movies: bookmarkedMovies)
+            })
+            .disposed(by: disposeBag)
+        input
+            .viewWillDisappearObservable
             .withUnretained(self)
             .subscribe(onNext: { (owner, _) in
                 owner.resetBookmarkState()
@@ -105,17 +116,20 @@ extension MovieSearchViewModel {
     final class Input {
         let searchMovieObservable: Observable<String>
         let didTabBookmarkButton: Observable<Int>
+        let viewDidLoadObservable: Observable<Void>
         let viewWillAppearObservable: Observable<Void>
         let viewWillDisappearObservable: Observable<Void>
         
         init(
             searchMovieObservable: Observable<String>,
             didTabBookmarkButton: Observable<Int>,
+            viewDidLoadObservable: Observable<Void>,
             viewWillAppearObservable: Observable<Void>,
             viewWillDisappearObservable: Observable<Void>
         ) {
             self.searchMovieObservable = searchMovieObservable
             self.didTabBookmarkButton = didTabBookmarkButton
+            self.viewDidLoadObservable = viewDidLoadObservable
             self.viewWillAppearObservable = viewWillAppearObservable
             self.viewWillDisappearObservable = viewWillDisappearObservable
         }

@@ -44,6 +44,7 @@ class MovieSearchViewController: UIViewController {
     private let viewModel = MovieSearchViewModel()
     private let searchMovieObservable: PublishSubject<String> = .init()
     private let didTabBookmarkButton: PublishSubject<Int> = .init()
+    private let viewDidLoadObservable: PublishSubject<Void> = .init()
     private let viewWillAppearObservable: PublishSubject<Void> = .init()
     private let viewWillDisappearObservable: PublishSubject<Void> = .init()
     private let disposeBag: DisposeBag = .init()
@@ -60,6 +61,7 @@ class MovieSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewDidLoadObservable.onNext(())
         setupNavigationBar()
         setupHomeCollectionView()
     }
@@ -81,11 +83,13 @@ class MovieSearchViewController: UIViewController {
         let input = MovieSearchViewModel.Input(
             searchMovieObservable: searchMovieObservable,
             didTabBookmarkButton: didTabBookmarkButton,
+            viewDidLoadObservable: viewDidLoadObservable,
             viewWillAppearObservable: viewWillAppearObservable,
             viewWillDisappearObservable: viewWillDisappearObservable
         )
         let output = viewModel.transform(input)
-        output.movieItemsObservable
+        output
+            .movieItemsObservable
             .observe(on: MainScheduler.asyncInstance)
             .withUnretained(self)
             .subscribe(onNext: { (owner, movies) in
@@ -93,7 +97,8 @@ class MovieSearchViewController: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        output.reloadMovieItemsObservable
+        output
+            .reloadMovieItemsObservable
             .observe(on: MainScheduler.asyncInstance)
             .withUnretained(self)
             .subscribe(onNext: { (owner, movies) in
