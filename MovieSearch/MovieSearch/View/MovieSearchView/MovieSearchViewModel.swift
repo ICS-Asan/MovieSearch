@@ -10,27 +10,65 @@ final class MovieSearchViewModel {
     
     func transform(_ input: Input) -> Output {
         input
-            .loadBookmarkedMovie
-            .subscribe(onNext: { [weak self] data in
-                self?.storeBookmarkedMovie(movies: data)
-                self?.applyBookmarkState()
+            .viewDidLoadObservable
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.fetchBookmarkedMovie()
+            }
+            .subscribe(onNext: { bookmarkedMovies in
+                self.storeBookmarkedMovie(movies: bookmarkedMovies)
             })
             .disposed(by: disposeBag)
+        
         input
-            .searchMovieObserver
-            .subscribe(onNext: { [weak self] data in
-                self?.storeSearchResult(with: data)
-                self?.applyBookmarkState()
-            })
-            .disposed(by: disposeBag)
-        input
-            .didTabBookmarkButton
-            .subscribe(onNext: { [weak self] index in
-                self?.toggleBookmarkState(at: index)
+            .viewWillDisappearObservable
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, _) in
+                owner.resetBookmarkState()
             })
             .disposed(by: disposeBag)
 
-        return Output()
+        let searchMovieItems = input.searchMovieObservable
+            .withUnretained(self)
+            .flatMap { (owner, title) in
+                owner.movieSearchUseCase.fetchMovieSearchInformation(with: title)
+            }
+            .map { result -> [Movie] in
+                self.storeSearchResult(with: result)
+                self.applyBookmarkState()
+                return self.searchResults
+            }
+        
+        let reloadMovieItems = input.viewWillAppearObservable
+            .skip(1)
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.movieSearchUseCase.fetchBookmarkedMovie()
+            }
+            .map { result -> [Movie] in
+                self.storeBookmarkedMovie(movies: result)
+                self.applyBookmarkState()
+                return self.searchResults
+            }
+        
+        let updatedMovieItems = input.didTabBookmarkButton
+            .withUnretained(self)
+            .flatMap { (owner, title) -> Observable<[Movie]> in
+                owner.toggleBookmarkState(of: title)
+                return owner.fetchBookmarkedMovie()
+            }
+            .map { bookmarkedMovies -> [Movie] in
+                self.storeBookmarkedMovie(movies: bookmarkedMovies)
+                self.applyBookmarkState()
+                return self.searchResults
+            }
+        
+    
+        return Output(
+            searchMovieItemsObservable: searchMovieItems,
+            reloadMovieItemsObservable: reloadMovieItems,
+            updateMovieItemsObservable: updatedMovieItems
+        )
     }
     
     func fetchBookmarkedMovie() -> Observable<[Movie]> {
@@ -38,19 +76,16 @@ final class MovieSearchViewModel {
     }
 
     func fetchSearchResult(with word: String) -> Observable<MovieSearchInformation?> {
-        movieSearchUseCase.fetchMovieSearchInformation(with: word)
+        if word.isEmpty == true {
+            return .empty()
+        }
+        return movieSearchUseCase.fetchMovieSearchInformation(with: word)
     }
     
-    func resetBookmarkState() -> Observable<[Movie]?> {
-        return Observable.create { [weak self] emitter in
-            self?.bookmarkedMovie.forEach { favorite in
-                let index = self?.searchResults.firstIndex(where: { $0.title  == favorite.title })
-                self?.changeBookmarkState(at: index, to: false)
-            }
-            emitter.onNext(self?.searchResults)
-            emitter.onCompleted()
-            
-            return Disposables.create()
+    func resetBookmarkState() {
+        if searchResults.isEmpty == true { return }
+        for index in 0..<searchResults.count {
+            searchResults[index].isBookmarked = false
         }
     }
     
@@ -71,7 +106,8 @@ final class MovieSearchViewModel {
         }
     }
     
-    private func toggleBookmarkState(at index: Int) {
+    private func toggleBookmarkState(of title: String) {
+        guard let index = searchResults.firstIndex(where: { $0.title  == title }) else { return }
         let currentBookmarkState = self.searchResults[index].isBookmarked
         if currentBookmarkState == true {
             changeBookmarkState(at: index, to: false)
@@ -90,20 +126,40 @@ final class MovieSearchViewModel {
 
 extension MovieSearchViewModel {
     final class Input {
-        let loadBookmarkedMovie: Observable<[Movie]>
-        let searchMovieObserver: Observable<MovieSearchInformation?>
-        let didTabBookmarkButton: Observable<Int>
+        let searchMovieObservable: Observable<String>
+        let didTabBookmarkButton: Observable<String>
+        let viewDidLoadObservable: Observable<Void>
+        let viewWillAppearObservable: Observable<Void>
+        let viewWillDisappearObservable: Observable<Void>
         
         init(
-            loadBookmarkedMovie: Observable<[Movie]>,
-            searchMovieObserver: Observable<MovieSearchInformation?>,
-            didTabBookmarkButton: Observable<Int>
+            searchMovieObservable: Observable<String>,
+            didTabBookmarkButton: Observable<String>,
+            viewDidLoadObservable: Observable<Void>,
+            viewWillAppearObservable: Observable<Void>,
+            viewWillDisappearObservable: Observable<Void>
         ) {
-            self.loadBookmarkedMovie = loadBookmarkedMovie
-            self.searchMovieObserver = searchMovieObserver
+            self.searchMovieObservable = searchMovieObservable
             self.didTabBookmarkButton = didTabBookmarkButton
+            self.viewDidLoadObservable = viewDidLoadObservable
+            self.viewWillAppearObservable = viewWillAppearObservable
+            self.viewWillDisappearObservable = viewWillDisappearObservable
         }
     }
     
-    final class Output { }
+    final class Output {
+        let movieItemsObservable: Observable<[Movie]>
+        let reloadMovieItemsObservable: Observable<[Movie]>
+        let updateMovieItemsObservable: Observable<[Movie]>
+        
+        init(
+            searchMovieItemsObservable: Observable<[Movie]>,
+            reloadMovieItemsObservable: Observable<[Movie]>,
+            updateMovieItemsObservable: Observable<[Movie]>
+        ) {
+            self.movieItemsObservable = searchMovieItemsObservable
+            self.reloadMovieItemsObservable = reloadMovieItemsObservable
+            self.updateMovieItemsObservable = updateMovieItemsObservable
+        }
+    }
 }

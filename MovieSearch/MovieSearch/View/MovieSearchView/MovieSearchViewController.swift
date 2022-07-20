@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 
 class MovieSearchViewController: UIViewController {
     private enum Section {
@@ -38,12 +39,14 @@ class MovieSearchViewController: UIViewController {
         return searchController
     }()
     
-    private var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list)
+    private var movieCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list())
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = MovieSearchViewModel()
-    private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
-    private let searchMovieObserver: PublishSubject<MovieSearchInformation?> = .init()
-    private let didTabBookmarkButton: PublishSubject<Int> = .init()
+    private let searchMovieObservable: PublishSubject<String> = .init()
+    private let didTabBookmarkButton: PublishSubject<String> = .init()
+    private let viewDidLoadObservable: PublishSubject<Void> = .init()
+    private let viewWillAppearObservable: PublishSubject<Void> = .init()
+    private let viewWillDisappearObservable: PublishSubject<Void> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init() {
@@ -58,31 +61,81 @@ class MovieSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        viewDidLoadObservable.onNext(())
         setupNavigationBar()
         setupHomeCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchBookmarkedMovie()
-        populate(movie: viewModel.searchResults)
+        viewWillAppearObservable.onNext(())
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        viewModel.resetBookmarkState()
-            .subscribe(onNext: { [weak self] movies in
-                self?.populate(movie: movies)
+        super.viewWillDisappear(animated)
+        viewWillDisappearObservable.onNext(())
+    }
+    
+    private func bind() {
+        bindSearchBar()
+        bindCollectionView()
+        
+        let input = MovieSearchViewModel.Input(
+            searchMovieObservable: searchMovieObservable,
+            didTabBookmarkButton: didTabBookmarkButton,
+            viewDidLoadObservable: viewDidLoadObservable,
+            viewWillAppearObservable: viewWillAppearObservable,
+            viewWillDisappearObservable: viewWillDisappearObservable
+        )
+        let output = viewModel.transform(input)
+        output
+            .movieItemsObservable
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+        
+        output
+            .reloadMovieItemsObservable
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+        
+        output
+            .updateMovieItemsObservable
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
             })
             .disposed(by: disposeBag)
     }
     
-    private func bind() {
-        let input = MovieSearchViewModel.Input(
-            loadBookmarkedMovie: loadBookmarkedMovie,
-            searchMovieObserver: searchMovieObserver,
-            didTabBookmarkButton: didTabBookmarkButton
-        )
-        let _ = viewModel.transform(input)
+    private func bindSearchBar() {
+        searchController.searchBar.rx.text.orEmpty
+            .withUnretained(self)
+            .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
+            .subscribe(onNext: { (_, searchWord) in
+                self.searchMovieObservable.onNext(searchWord)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindCollectionView() {
+        movieCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, indexPath) in
+                let movie = owner.viewModel.searchResults[indexPath.row]
+                let destination = MovieDetailViewController()
+                owner.navigationController?.pushViewController(destination, animated: true)
+                destination.setupDetailView(with: movie)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupNavigationBar() {
@@ -90,15 +143,6 @@ class MovieSearchViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
         bookmarkButton.addTarget(self, action: #selector(presentBookmarkListView), for: .touchDown)
         navigationItem.searchController = searchController
-        searchController.searchBar.delegate = self
-    }
-    
-    private func fetchBookmarkedMovie() {
-        viewModel.fetchBookmarkedMovie()
-            .subscribe(onNext: { [weak self] data in
-                self?.loadBookmarkedMovie.onNext(data)
-            })
-            .disposed(by: disposeBag)
     }
     
     @objc private func presentBookmarkListView() {
@@ -114,7 +158,6 @@ extension MovieSearchViewController {
         setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
-        movieCollectionView.delegate = self
     }
     
     private func setupCollectionViewConstraints() {
@@ -134,7 +177,7 @@ extension MovieSearchViewController {
                 return UICollectionViewCell()
             }
             cell.containerView.changeBookmarkState = {
-                self.didTabBookmarkButton.onNext(indexPath.row)
+                self.didTabBookmarkButton.onNext(item.title)
             }
             cell.setupCell(with: item)
             
@@ -148,30 +191,7 @@ extension MovieSearchViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
         snapshot.appendSections([.list])
         snapshot.appendItems(movie, toSection: .list)
+        snapshot.reloadItems(movie)
         dataSource?.apply(snapshot)
-    }
-}
-
-extension MovieSearchViewController: UISearchBarDelegate {
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        guard let searchWord = searchBar.searchTextField.text,
-              searchWord.isEmpty == false else { return }
-        viewModel.fetchSearchResult(with: searchWord)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] result in
-                self?.searchMovieObserver.onNext(result)
-                self?.populate(movie: self?.viewModel.searchResults)
-            })
-            .disposed(by: disposeBag)
-        fetchBookmarkedMovie()
-    }
-}
-
-extension MovieSearchViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = viewModel.searchResults[indexPath.row]
-        let destination = MovieDetailViewController()
-        navigationController?.pushViewController(destination, animated: true)
-        destination.setupDetailView(with: movie)
     }
 }

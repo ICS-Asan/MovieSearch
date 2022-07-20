@@ -6,7 +6,7 @@ class BookmarkListViewController: UIViewController {
         case list
     }
     
-    private var bookmarkCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list)
+    private var bookmarkCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list())
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = BookmarkListViewModel()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
