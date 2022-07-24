@@ -13,14 +13,15 @@ final class MovieDetailViewModel {
                 self?.receiveCurrentMovie(movie)
             })
             .disposed(by: disposeBag)
-        input
-            .didTabBookmarkButton
-            .subscribe(onNext: { [weak self] in
-                self?.toggleBookmarkState()
-            })
-            .disposed(by: disposeBag)
         
-        return Output()
+        let updatedBookmarkState = input.didTabBookmarkButton
+            .withUnretained(self)
+            .map { (owner, _) -> Bool? in
+                owner.toggleBookmarkState()
+                return owner.currentMovie?.isBookmarked
+            }
+        
+        return Output(updateBookmarkStateObservable: updatedBookmarkState)
     }
     
     private func receiveCurrentMovie(_ movie: Movie) {
@@ -28,14 +29,12 @@ final class MovieDetailViewModel {
     }
     
     private func toggleBookmarkState() {
+        currentMovie?.isBookmarked.toggle()
         guard let currentMovie = currentMovie else { return }
-        let currentBookmarkState = currentMovie.isBookmarked
-        if currentBookmarkState == true {
-            movieDetailUseCase.deleteBookmarkedMovie(with: currentMovie.title)
+        if currentMovie.isBookmarked == true {
+            movieDetailUseCase.saveBookmarkedMovie(currentMovie)
         } else {
-            var movie = currentMovie
-            movie.isBookmarked = true
-            movieDetailUseCase.saveBookmarkedMovie(movie)
+            movieDetailUseCase.deleteBookmarkedMovie(with: currentMovie.title)
         }
     }
 }
@@ -53,6 +52,11 @@ extension MovieDetailViewModel {
         }
     }
 
-    final class Output { }
+    final class Output {
+        let updateBookmarkStateObservable: Observable<Bool?>
+        init(updateBookmarkStateObservable: Observable<Bool?>) {
+            self.updateBookmarkStateObservable = updateBookmarkStateObservable
+        }
+    }
 
 }

@@ -5,10 +5,12 @@ import RxSwift
 
 class MovieDetailViewController: UIViewController {
     private let headerView = UIView()
+    private let movieInformationView = MovieInformationView()
     private let webView = WKWebView(frame: .zero)
     private let viewModel = MovieDetailViewModel()
     private let setupViewObserver: PublishSubject<Movie> = .init()
     private let didTabBookmarkButton: PublishSubject<Void> = .init()
+    private let disposeBag: DisposeBag = .init()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -41,7 +43,15 @@ class MovieDetailViewController: UIViewController {
             setupViewObserver: setupViewObserver,
             didTabBookmarkButton: didTabBookmarkButton
         )
-        let _ = viewModel.transform(input)
+        
+        let output = viewModel.transform(input)
+        output.updateBookmarkStateObservable
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, state) in
+                owner.updateBookmarkButton(state: state)
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupDetailViewLayout() {
@@ -60,7 +70,6 @@ class MovieDetailViewController: UIViewController {
     }
     
     private func setupHeaderView(with movie: Movie) {
-        let movieInformationView = MovieInformationView()
         movieInformationView.setupView(with: movie)
         movieInformationView.changeBookmarkState = {
             self.didTabBookmarkButton.onNext(())
@@ -76,5 +85,10 @@ class MovieDetailViewController: UIViewController {
         let request = URLRequest(url: movieUrl)
         webView.allowsBackForwardNavigationGestures = true
         webView.load(request)
+    }
+    
+    private func updateBookmarkButton(state: Bool?) {
+        guard let state = state else { return }
+        movieInformationView.setupBookmarkButtonColor(with: state)
     }
 }
