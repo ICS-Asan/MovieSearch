@@ -20,7 +20,17 @@ final class BookmarkListViewModel {
             })
             .disposed(by: disposeBag)
         
-        return Output()
+        let bookmarkedMovies = input.viewWillAppearObservable
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.fetchBookmarkedMovie()
+            }
+            .map { result -> [Movie] in
+                self.storeBookmarkedMovie(movies: result)
+                return self.bookmarkedMovie
+            }
+        
+        return Output(loadBookmarkedMovies: bookmarkedMovies)
     }
     
     func fetchBookmarkedMovie() -> Observable<[Movie]> {
@@ -45,18 +55,27 @@ final class BookmarkListViewModel {
 
 extension BookmarkListViewModel {
     final class Input {
+        let viewWillAppearObservable: Observable<Void>
         let loadBookmarkedMovie: Observable<[Movie]>
         let didTabBookmarkButton: Observable<Int>
 
         init(
+            viewWillAppearObservable: Observable<Void>,
             loadBookmarkedMovie: Observable<[Movie]>,
             didTabBookmarkButton: Observable<Int>
         ) {
+            self.viewWillAppearObservable = viewWillAppearObservable
             self.loadBookmarkedMovie = loadBookmarkedMovie
             self.didTabBookmarkButton = didTabBookmarkButton
         }
     }
 
-    final class Output { }
+    final class Output {
+        let loadBookmarkedMovies: Observable<[Movie]>
+        
+        init(loadBookmarkedMovies: Observable<[Movie]>) {
+            self.loadBookmarkedMovies = loadBookmarkedMovies
+        }
+    }
 
 }

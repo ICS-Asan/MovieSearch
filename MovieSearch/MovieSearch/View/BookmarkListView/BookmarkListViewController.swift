@@ -9,6 +9,7 @@ class BookmarkListViewController: UIViewController {
     private var bookmarkCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list())
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = BookmarkListViewModel()
+    private let viewWillAppearObservable: PublishSubject<Void> = .init()
     private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
     private let didTabBookmarkButton: PublishSubject<Int> = .init()
     private let disposeBag: DisposeBag = .init()
@@ -31,16 +32,25 @@ class BookmarkListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchBookmarkedMovie()
-        
+        viewWillAppearObservable.onNext(())
     }
     
     private func bind() {
         let input = BookmarkListViewModel.Input(
+            viewWillAppearObservable: viewWillAppearObservable,
             loadBookmarkedMovie: loadBookmarkedMovie,
             didTabBookmarkButton: didTabBookmarkButton
         )
-        let _ = viewModel.transform(input)
+        
+        let output = viewModel.transform(input)
+        output
+            .loadBookmarkedMovies
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupNavigationBar() {
@@ -102,6 +112,7 @@ extension BookmarkListViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
         snapshot.appendSections([.list])
         snapshot.appendItems(movie, toSection: .list)
+        snapshot.reloadItems(movie)
         dataSource?.apply(snapshot)
     }
 }
