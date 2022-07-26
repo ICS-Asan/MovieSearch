@@ -11,8 +11,7 @@ class BookmarkListViewController: UIViewController {
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = BookmarkListViewModel()
     private let viewWillAppearObservable: PublishSubject<Void> = .init()
-    private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
-    private let didTabBookmarkButton: PublishSubject<Int> = .init()
+    private let didTabBookmarkButton: PublishSubject<String> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init() {
@@ -41,13 +40,21 @@ class BookmarkListViewController: UIViewController {
         
         let input = BookmarkListViewModel.Input(
             viewWillAppearObservable: viewWillAppearObservable,
-            loadBookmarkedMovie: loadBookmarkedMovie,
             didTabBookmarkButton: didTabBookmarkButton
         )
         
         let output = viewModel.transform(input)
         output
             .loadBookmarkedMovies
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+        
+        output
+            .updateBookmrakedMovies
             .observe(on: MainScheduler.asyncInstance)
             .withUnretained(self)
             .subscribe(onNext: { (owner, movies) in
@@ -71,15 +78,6 @@ class BookmarkListViewController: UIViewController {
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissView))
         navigationItem.title = Design.Text.bookmarkListViewTitle
-    }
-    
-    private func fetchBookmarkedMovie() {
-        viewModel.fetchBookmarkedMovie()
-            .subscribe(onNext: { [weak self] data in
-                self?.loadBookmarkedMovie.onNext(data)
-            })
-            .disposed(by: disposeBag)
-        populate(movie: viewModel.bookmarkedMovie)
     }
     
     @objc private func dismissView() {
@@ -111,8 +109,7 @@ extension BookmarkListViewController {
                 return UICollectionViewCell()
             }
             cell.containerView.changeBookmarkState = { [weak self] in
-                self?.didTabBookmarkButton.onNext(indexPath.row)
-                self?.fetchBookmarkedMovie()
+                self?.didTabBookmarkButton.onNext(item.title)
             }
             cell.setupCell(with: item)
             
