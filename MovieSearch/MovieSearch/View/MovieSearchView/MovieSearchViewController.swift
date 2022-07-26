@@ -15,19 +15,6 @@ class MovieSearchViewController: UIViewController {
         return label
     }()
     
-    private let bookmarkButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(Design.Text.moveBookmarkListButtonTitle, for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
-        button.setImage(Design.Image.bookmarkButton, for: .normal)
-        button.tintColor = .systemYellow
-        button.layer.borderColor = Design.Color.border
-        button.layer.borderWidth = 1
-        
-        return button
-    }()
-    
     private let searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.hidesNavigationBarDuringPresentation = false
@@ -141,16 +128,7 @@ class MovieSearchViewController: UIViewController {
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: viewTitleLable)
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
-        bookmarkButton.addTarget(self, action: #selector(presentBookmarkListView), for: .touchDown)
         navigationItem.searchController = searchController
-    }
-    
-    @objc private func presentBookmarkListView() {
-        let destination = UINavigationController(rootViewController: BookmarkListViewController())
-        destination.view.backgroundColor = Design.Color.defaultBackground
-        destination.modalPresentationStyle = .fullScreen
-        present(destination, animated: true)
     }
 }
 
