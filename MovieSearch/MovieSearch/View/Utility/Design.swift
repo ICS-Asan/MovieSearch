@@ -2,6 +2,8 @@ import UIKit
 
 enum Design {
     enum Text {
+        static let searchViewTabBarTitle = "검색"
+        static let bookmarkListViewTabBarTitle = "즐겨찾기"
         static let movieSearchViewTitle = "네이버 영화 검색"
         static let moveBookmarkListButtonTitle = "즐겨찾기"
         static let bookmarkListViewTitle = "즐겨찾기 목록"
@@ -18,6 +20,7 @@ enum Design {
     }
     
     enum Color {
+        static let main = UIColor(red: 203/255, green: 186/255, blue: 235/255, alpha: 1)
         static let defaultBackground = UIColor.systemBackground
         static let border = UIColor.secondarySystemBackground.cgColor
         static let bookmarkedButton = UIColor.systemYellow
@@ -26,6 +29,9 @@ enum Design {
     }
     
     enum Image {
+        static let search = UIImage(systemName: "magnifyingglass")
+        static let normalBookmark = UIImage(systemName: "star")
+        static let selectedbookmark = UIImage(systemName: "star.fill")
         static let bookmarkButton = UIImage(systemName: "star.fill")
     }
     
