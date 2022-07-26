@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 
 class BookmarkListViewController: UIViewController {
     private enum Section {
@@ -36,6 +37,8 @@ class BookmarkListViewController: UIViewController {
     }
     
     private func bind() {
+        bindCollectionView()
+        
         let input = BookmarkListViewModel.Input(
             viewWillAppearObservable: viewWillAppearObservable,
             loadBookmarkedMovie: loadBookmarkedMovie,
@@ -49,6 +52,18 @@ class BookmarkListViewController: UIViewController {
             .withUnretained(self)
             .subscribe(onNext: { (owner, movies) in
                 owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindCollectionView() {
+        bookmarkCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, indexPath) in
+                let movie = owner.viewModel.bookmarkedMovie[indexPath.row]
+                let destination = MovieDetailViewController()
+                owner.navigationController?.pushViewController(destination, animated: true)
+                destination.setupDetailView(with: movie)
             })
             .disposed(by: disposeBag)
     }
@@ -77,7 +92,6 @@ extension BookmarkListViewController {
         setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
-        bookmarkCollectionView.delegate = self
     }
     
     private func setupCollectionViewConstraints() {
@@ -114,15 +128,5 @@ extension BookmarkListViewController {
         snapshot.appendItems(movie, toSection: .list)
         snapshot.reloadItems(movie)
         dataSource?.apply(snapshot)
-    }
-}
-
-extension BookmarkListViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = viewModel.bookmarkedMovie[indexPath.row]
-        let destination = MovieDetailViewController()
-        navigationController?.pushViewController(destination, animated: true)
-        destination.setupDetailView(with: movie)
-        
     }
 }
