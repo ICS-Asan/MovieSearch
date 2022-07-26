@@ -7,20 +7,31 @@ final class BookmarkListViewModel {
     private(set) var bookmarkedMovie: [Movie] = []
     
     func transform(_ input: Input) -> Output {
-        input
-            .loadBookmarkedMovie
-            .subscribe(onNext: { [weak self] data in
-                self?.storeBookmarkedMovie(movies: data)
-            })
-            .disposed(by: disposeBag)
-        input
-            .didTabBookmarkButton
-            .subscribe(onNext: { [weak self] index in
-                self?.toggleBookmarkState(at: index)
-            })
-            .disposed(by: disposeBag)
+        let bookmarkedMovies = input.viewWillAppearObservable
+            .withUnretained(self)
+            .flatMap { (owner, _) in
+                owner.fetchBookmarkedMovie()
+            }
+            .map { result -> [Movie] in
+                self.storeBookmarkedMovie(movies: result)
+                return self.bookmarkedMovie
+            }
         
-        return Output()
+        let updatedBookmarkedMovies = input.didTabBookmarkButton
+            .withUnretained(self)
+            .flatMap { (owner, title) -> Observable<[Movie]> in
+                owner.toggleBookmarkState(of: title)
+                return owner.fetchBookmarkedMovie()
+            }
+            .map { bookmarkedMovies -> [Movie] in
+                self.storeBookmarkedMovie(movies: bookmarkedMovies)
+                return self.bookmarkedMovie
+            }
+        
+        return Output(
+            loadBookmarkedMovies: bookmarkedMovies,
+            updateBookmrakedMovies: updatedBookmarkedMovies
+        )
     }
     
     func fetchBookmarkedMovie() -> Observable<[Movie]> {
@@ -31,13 +42,14 @@ final class BookmarkListViewModel {
         bookmarkedMovie = movies
     }
     
-    private func toggleBookmarkState(at index: Int) {
-        let currentBookmarkState = self.bookmarkedMovie[index].isBookmarked
+    private func toggleBookmarkState(of title: String) {
+        guard let index = bookmarkedMovie.firstIndex(where: { $0.title  == title }) else { return }
+        let currentBookmarkState = bookmarkedMovie[index].isBookmarked
         if currentBookmarkState == true {
-            self.bookmarkedMovie[index].isBookmarked = false
+            bookmarkedMovie[index].isBookmarked = false
             bookmarkListUseCase.deleteBookmarkedMovie(with: self.bookmarkedMovie[index].title)
         } else {
-            self.bookmarkedMovie[index].isBookmarked = true
+            bookmarkedMovie[index].isBookmarked = true
             bookmarkListUseCase.saveBookmarkedMovie(self.bookmarkedMovie[index])
         }
     }
@@ -45,18 +57,28 @@ final class BookmarkListViewModel {
 
 extension BookmarkListViewModel {
     final class Input {
-        let loadBookmarkedMovie: Observable<[Movie]>
-        let didTabBookmarkButton: Observable<Int>
+        let viewWillAppearObservable: Observable<Void>
+        let didTabBookmarkButton: Observable<String>
 
         init(
-            loadBookmarkedMovie: Observable<[Movie]>,
-            didTabBookmarkButton: Observable<Int>
+            viewWillAppearObservable: Observable<Void>,
+            didTabBookmarkButton: Observable<String>
         ) {
-            self.loadBookmarkedMovie = loadBookmarkedMovie
+            self.viewWillAppearObservable = viewWillAppearObservable
             self.didTabBookmarkButton = didTabBookmarkButton
         }
     }
 
-    final class Output { }
-
+    final class Output {
+        let loadBookmarkedMovies: Observable<[Movie]>
+        let updateBookmrakedMovies: Observable<[Movie]>
+        
+        init(
+            loadBookmarkedMovies: Observable<[Movie]>,
+            updateBookmrakedMovies: Observable<[Movie]>
+        ) {
+            self.loadBookmarkedMovies = loadBookmarkedMovies
+            self.updateBookmrakedMovies = updateBookmrakedMovies
+        }
+    }
 }

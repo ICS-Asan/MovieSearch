@@ -80,6 +80,14 @@ final class MovieInformationView: UIView {
         setupBookmarkButtonColor(with: movie.isBookmarked)
     }
     
+    func setupBookmarkButtonColor(with isBookmarked: Bool) {
+        if isBookmarked {
+            bookmarkButton.tintColor = Design.Color.bookmarkedButton
+        } else {
+            bookmarkButton.tintColor = Design.Color.normalButton
+        }
+    }
+    
     private func setupPosterImageView(url: String) {
         if url.isEmpty {
             posterImageView.sd_setImage(with: URL(string: Design.Text.defaultPosterURL))
@@ -102,14 +110,6 @@ final class MovieInformationView: UIView {
     
     private func setupUserRatingLable(with userRating: String) {
         userRatingLabel.text = Design.Text.userRatingTitle + userRating
-    }
-    
-    private func setupBookmarkButtonColor(with isBookmarked: Bool) {
-        if isBookmarked {
-            bookmarkButton.tintColor = Design.Color.bookmarkedButton
-        } else {
-            bookmarkButton.tintColor = Design.Color.normalButton
-        }
     }
     
     private func commonInit() {
@@ -158,6 +158,5 @@ final class MovieInformationView: UIView {
     
     @objc private func didTabBookmarkButton() {
         changeBookmarkState?()
-        setupBookmarkButtonColor(with: !isBookmarked)
     }
 }
