@@ -118,6 +118,7 @@ class MovieSearchViewController: UIViewController {
     
     private func bindSearchBar() {
         searchController.searchBar.rx.text.orEmpty
+            .distinctUntilChanged()
             .withUnretained(self)
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (_, searchWord) in
