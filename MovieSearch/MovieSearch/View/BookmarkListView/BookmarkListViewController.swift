@@ -1,5 +1,6 @@
 import UIKit
 import RxSwift
+import RxCocoa
 
 class BookmarkListViewController: UIViewController {
     private enum Section {
@@ -9,8 +10,8 @@ class BookmarkListViewController: UIViewController {
     private var bookmarkCollectionView = UICollectionView(frame: .zero, collectionViewLayout: MovieCollectionViewLayout.list())
     private var dataSource: UICollectionViewDiffableDataSource<Section, Movie>?
     private let viewModel = BookmarkListViewModel()
-    private let loadBookmarkedMovie: PublishSubject<[Movie]> = .init()
-    private let didTabBookmarkButton: PublishSubject<Int> = .init()
+    private let viewWillAppearObservable: PublishSubject<Void> = .init()
+    private let didTabBookmarkButton: PublishSubject<String> = .init()
     private let disposeBag: DisposeBag = .init()
     
     init() {
@@ -31,30 +32,52 @@ class BookmarkListViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchBookmarkedMovie()
-        
+        viewWillAppearObservable.onNext(())
     }
     
     private func bind() {
+        bindCollectionView()
+        
         let input = BookmarkListViewModel.Input(
-            loadBookmarkedMovie: loadBookmarkedMovie,
+            viewWillAppearObservable: viewWillAppearObservable,
             didTabBookmarkButton: didTabBookmarkButton
         )
-        let _ = viewModel.transform(input)
+        
+        let output = viewModel.transform(input)
+        output
+            .loadBookmarkedMovies
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+        
+        output
+            .updateBookmrakedMovies
+            .observe(on: MainScheduler.asyncInstance)
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, movies) in
+                owner.populate(movie: movies)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func bindCollectionView() {
+        bookmarkCollectionView.rx.itemSelected
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, indexPath) in
+                let movie = owner.viewModel.bookmarkedMovie[indexPath.row]
+                let destination = MovieDetailViewController()
+                owner.navigationController?.pushViewController(destination, animated: true)
+                destination.setupDetailView(with: movie)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupNavigationBar() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissView))
         navigationItem.title = Design.Text.bookmarkListViewTitle
-    }
-    
-    private func fetchBookmarkedMovie() {
-        viewModel.fetchBookmarkedMovie()
-            .subscribe(onNext: { [weak self] data in
-                self?.loadBookmarkedMovie.onNext(data)
-            })
-            .disposed(by: disposeBag)
-        populate(movie: viewModel.bookmarkedMovie)
     }
     
     @objc private func dismissView() {
@@ -67,7 +90,6 @@ extension BookmarkListViewController {
         setupCollectionViewConstraints()
         registerCollectionViewCell()
         setupCollectionViewDataSource()
-        bookmarkCollectionView.delegate = self
     }
     
     private func setupCollectionViewConstraints() {
@@ -87,8 +109,7 @@ extension BookmarkListViewController {
                 return UICollectionViewCell()
             }
             cell.containerView.changeBookmarkState = { [weak self] in
-                self?.didTabBookmarkButton.onNext(indexPath.row)
-                self?.fetchBookmarkedMovie()
+                self?.didTabBookmarkButton.onNext(item.title)
             }
             cell.setupCell(with: item)
             
@@ -102,16 +123,7 @@ extension BookmarkListViewController {
         var snapshot = NSDiffableDataSourceSnapshot<Section, Movie>()
         snapshot.appendSections([.list])
         snapshot.appendItems(movie, toSection: .list)
+        snapshot.reloadItems(movie)
         dataSource?.apply(snapshot)
-    }
-}
-
-extension BookmarkListViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = viewModel.bookmarkedMovie[indexPath.row]
-        let destination = MovieDetailViewController()
-        navigationController?.pushViewController(destination, animated: true)
-        destination.setupDetailView(with: movie)
-        
     }
 }
