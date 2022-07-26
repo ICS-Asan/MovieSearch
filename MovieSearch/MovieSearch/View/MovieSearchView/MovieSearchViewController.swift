@@ -116,6 +116,13 @@ class MovieSearchViewController: UIViewController {
                 destination.setupDetailView(with: movie)
             })
             .disposed(by: disposeBag)
+        
+        movieCollectionView.rx.didScroll
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, _) in
+                owner.navigationItem.searchController?.searchBar.endEditing(true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupNavigationBar() {
