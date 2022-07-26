@@ -7,14 +7,6 @@ class MovieSearchViewController: UIViewController {
         case list
     }
     
-    private let viewTitleLable: UILabel = {
-        let label = UILabel()
-        label.font = Design.Font.movieSearchViewTitle
-        label.text = Design.Text.movieSearchViewTitle
-        
-        return label
-    }()
-    
     private let searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.hidesNavigationBarDuringPresentation = false
@@ -127,7 +119,7 @@ class MovieSearchViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: viewTitleLable)
+        navigationItem.title = Design.Text.movieSearchViewTitle
         navigationItem.searchController = searchController
     }
 }
