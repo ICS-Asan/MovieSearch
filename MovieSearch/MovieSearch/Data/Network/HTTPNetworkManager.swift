@@ -16,12 +16,12 @@ final class HTTPNetworkManager {
         
         var urlRequest = URLRequest(url: endPoint, method: .get)
         urlRequest.setValue(
-            ClientInformation.ID.value,
-            forHTTPHeaderField: ClientInformation.ID.key
+            ClientInformation.Search.ID.value,
+            forHTTPHeaderField: ClientInformation.Search.ID.key
         )
         urlRequest.addValue(
-            ClientInformation.Secret.value,
-            forHTTPHeaderField: ClientInformation.Secret.key
+            ClientInformation.Search.Secret.value,
+            forHTTPHeaderField: ClientInformation.Search.Secret.key
         )
         
         return urlRequest
