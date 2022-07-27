@@ -11,6 +11,11 @@ enum ClientInformation {
             static let key = "X-Naver-Client-Secret"
             static let value = "MsuEr9QhRX"
         }
+        
+        static let headerValue: [String: String] = [
+            ID.key: ID.value,
+            Secret.key: Secret.value
+        ]
     }
     
     enum Chart {
