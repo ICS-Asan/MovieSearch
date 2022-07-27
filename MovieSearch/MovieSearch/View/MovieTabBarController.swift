@@ -17,6 +17,7 @@ class MovieTabBarController: UITabBarController {
     private func commonInit() {
         setupTabBarViews()
         setupTabBarItem()
+        setupNavigationBarColor()
     }
     
     private func setupTabBarViews() {
@@ -36,5 +37,13 @@ class MovieTabBarController: UITabBarController {
         )
         tabBar.tintColor = Design.Color.main
         tabBar.unselectedItemTintColor = .systemGray
+    }
+    
+    private func setupNavigationBarColor() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        appearance.backgroundColor = UIColor.systemBackground
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
     }
 }

@@ -4,8 +4,7 @@ enum Design {
     enum Text {
         static let searchViewTabBarTitle = "검색"
         static let bookmarkListViewTabBarTitle = "즐겨찾기"
-        static let movieSearchViewTitle = "네이버 영화 검색"
-        static let moveBookmarkListButtonTitle = "즐겨찾기"
+        static let movieSearchViewTitle = "영화 검색"
         static let bookmarkListViewTitle = "즐겨찾기 목록"
         static let directorTitle = "감독: "
         static let actorTitle = "출연: "
