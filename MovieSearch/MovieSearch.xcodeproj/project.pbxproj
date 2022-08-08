@@ -48,6 +48,9 @@
 		47D7D259286B011F004D3F43 /* Design.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47D7D258286B011F004D3F43 /* Design.swift */; };
 		47DFC5C728A1415D009397D8 /* BoxOfficeInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DFC5C628A1415D009397D8 /* BoxOfficeInformation.swift */; };
 		47DFC5C928A141A3009397D8 /* BoxOfficeMovie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DFC5C828A141A3009397D8 /* BoxOfficeMovie.swift */; };
+		47DFC5CB28A145FF009397D8 /* BoxOfficeInformationDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DFC5CA28A145FF009397D8 /* BoxOfficeInformationDTO.swift */; };
+		47DFC5CD28A14CD9009397D8 /* BoxOfficeResultDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DFC5CC28A14CD9009397D8 /* BoxOfficeResultDTO.swift */; };
+		47DFC5CF28A14CF5009397D8 /* BoxOfficeMovieDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47DFC5CE28A14CF5009397D8 /* BoxOfficeMovieDTO.swift */; };
 		47EE0DEC286A62C700846EE9 /* MovieCoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DEB286A62C700846EE9 /* MovieCoreDataRepository.swift */; };
 		47EE0DEE286A634500846EE9 /* CoreDataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DED286A634500846EE9 /* CoreDataRepository.swift */; };
 		47EE0DF0286A63D500846EE9 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47EE0DEF286A63D500846EE9 /* CoreDataManager.swift */; };
@@ -96,6 +99,9 @@
 		47D7D258286B011F004D3F43 /* Design.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Design.swift; sourceTree = "<group>"; };
 		47DFC5C628A1415D009397D8 /* BoxOfficeInformation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeInformation.swift; sourceTree = "<group>"; };
 		47DFC5C828A141A3009397D8 /* BoxOfficeMovie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeMovie.swift; sourceTree = "<group>"; };
+		47DFC5CA28A145FF009397D8 /* BoxOfficeInformationDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeInformationDTO.swift; sourceTree = "<group>"; };
+		47DFC5CC28A14CD9009397D8 /* BoxOfficeResultDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeResultDTO.swift; sourceTree = "<group>"; };
+		47DFC5CE28A14CF5009397D8 /* BoxOfficeMovieDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeMovieDTO.swift; sourceTree = "<group>"; };
 		47EE0DEB286A62C700846EE9 /* MovieCoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieCoreDataRepository.swift; sourceTree = "<group>"; };
 		47EE0DED286A634500846EE9 /* CoreDataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRepository.swift; sourceTree = "<group>"; };
 		47EE0DEF286A63D500846EE9 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -205,6 +211,9 @@
 			children = (
 				479CD1B02869965E00ABD0AB /* MovieSearhInformationDTO.swift */,
 				479CD1B22869966E00ABD0AB /* MovieDTO.swift */,
+				47DFC5CC28A14CD9009397D8 /* BoxOfficeResultDTO.swift */,
+				47DFC5CA28A145FF009397D8 /* BoxOfficeInformationDTO.swift */,
+				47DFC5CE28A14CF5009397D8 /* BoxOfficeMovieDTO.swift */,
 			);
 			path = NetworkDTO;
 			sourceTree = "<group>";
@@ -451,6 +460,8 @@
 				479CD1C92869A33200ABD0AB /* MovieNetworkRepository.swift in Sources */,
 				47D7D259286B011F004D3F43 /* Design.swift in Sources */,
 				47EE0DF2286A7FF500846EE9 /* MovieDetailUseCase.swift in Sources */,
+				47DFC5CB28A145FF009397D8 /* BoxOfficeInformationDTO.swift in Sources */,
+				47DFC5CF28A14CF5009397D8 /* BoxOfficeMovieDTO.swift in Sources */,
 				477A76E2286A20210028A292 /* ViewModelDescribing.swift in Sources */,
 				479CD1D92869D25200ABD0AB /* MovieCell.swift in Sources */,
 				47895B93286A37140031DD91 /* MovieDetailViewController.swift in Sources */,
@@ -482,6 +493,7 @@
 				479CD1B92869974400ABD0AB /* Movie.swift in Sources */,
 				47EE0DF0286A63D500846EE9 /* CoreDataManager.swift in Sources */,
 				47EE0DEC286A62C700846EE9 /* MovieCoreDataRepository.swift in Sources */,
+				47DFC5CD28A14CD9009397D8 /* BoxOfficeResultDTO.swift in Sources */,
 				479CD196286985EA00ABD0AB /* SceneDelegate.swift in Sources */,
 				479CD1BE28699A2800ABD0AB /* URLRequest+extension.swift in Sources */,
 				47D7D256286AFF49004D3F43 /* MovieCollectionViewLayout.swift in Sources */,
