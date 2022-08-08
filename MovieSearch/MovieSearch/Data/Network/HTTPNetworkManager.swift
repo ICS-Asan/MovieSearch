@@ -9,26 +9,21 @@ final class HTTPNetworkManager {
         self.urlSession = urlSession
     }
     
-    private func createURLRequest(with endPoint: URL?) -> URLRequest? {
+    private func createURLRequest(with endPoint: URL?, hearder: [String: String] = [:]) -> URLRequest? {
         guard let endPoint = endPoint else {
             return nil
         }
         
         var urlRequest = URLRequest(url: endPoint, method: .get)
-        urlRequest.setValue(
-            ClientInformation.Search.ID.value,
-            forHTTPHeaderField: ClientInformation.Search.ID.key
-        )
-        urlRequest.addValue(
-            ClientInformation.Search.Secret.value,
-            forHTTPHeaderField: ClientInformation.Search.Secret.key
-        )
+        hearder.forEach { key, value in
+            urlRequest.setValue(value, forHTTPHeaderField: key)
+        }
         
         return urlRequest
     }
     
-    func fetch(with endPoint: URL?) -> Observable<Data> {
-        guard let urlRequest = createURLRequest(with: endPoint) else {
+    func fetch(with endPoint: URL?, hearder: [String: String] = [:]) -> Observable<Data> {
+        guard let urlRequest = createURLRequest(with: endPoint, hearder: hearder) else {
             return .error(HTTPNetworkError.invalidEndPoint)
         }
 
