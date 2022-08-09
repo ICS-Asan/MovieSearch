@@ -6,7 +6,7 @@ final class MovieSearchUseCase {
     let coreDataRepository: CoreDataRepository
     
     init(
-        movieNetworkRepository: SearchNetworkRepository = MovieNetworkRepository(),
+        movieNetworkRepository: SearchNetworkRepository = NaverMovieNetworkRepository(),
         coreDataRepository: CoreDataRepository = MovieCoreDataRepository()
     ) {
         self.movieNetworkRepository = movieNetworkRepository

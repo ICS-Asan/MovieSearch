@@ -1,7 +1,7 @@
 import Foundation
 import RxSwift
 
-final class MovieNetworkRepository: SearchNetworkRepository {
+final class NaverMovieNetworkRepository: SearchNetworkRepository {
     func fetchMovieSearchInformation(with searchWord: String) -> Observable<MovieSearchInformation?> {
         let movieSearchInformation = HTTPNetworkManager.shared.fetch(
             with: EndPoint.movieSearch(word: searchWord).url,
