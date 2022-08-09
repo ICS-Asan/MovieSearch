@@ -2,11 +2,11 @@ import Foundation
 import RxSwift
 
 final class MovieSearchUseCase {
-    let movieNetworkRepository: NetworkRepository
+    let movieNetworkRepository: SearchNetworkRepository
     let coreDataRepository: CoreDataRepository
     
     init(
-        movieNetworkRepository: NetworkRepository = MovieNetworkRepository(),
+        movieNetworkRepository: SearchNetworkRepository = NaverMovieNetworkRepository(),
         coreDataRepository: CoreDataRepository = MovieCoreDataRepository()
     ) {
         self.movieNetworkRepository = movieNetworkRepository
