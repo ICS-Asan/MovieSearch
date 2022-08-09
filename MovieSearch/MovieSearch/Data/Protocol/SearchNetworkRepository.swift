@@ -1,6 +1,6 @@
 import Foundation
 import RxSwift
 
-protocol NetworkRepository {
+protocol SearchNetworkRepository {
     func fetchMovieSearchInformation(with searchWord: String) -> Observable<MovieSearchInformation?>
 }

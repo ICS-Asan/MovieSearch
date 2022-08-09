@@ -76,12 +76,7 @@ class BookmarkListViewController: UIViewController {
     }
     
     private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(dismissView))
         navigationItem.title = Design.Text.bookmarkListViewTitle
-    }
-    
-    @objc private func dismissView() {
-        dismiss(animated: true)
     }
 }
 

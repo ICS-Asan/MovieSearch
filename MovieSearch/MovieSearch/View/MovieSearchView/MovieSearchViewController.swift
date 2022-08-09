@@ -7,27 +7,6 @@ class MovieSearchViewController: UIViewController {
         case list
     }
     
-    private let viewTitleLable: UILabel = {
-        let label = UILabel()
-        label.font = Design.Font.movieSearchViewTitle
-        label.text = Design.Text.movieSearchViewTitle
-        
-        return label
-    }()
-    
-    private let bookmarkButton: UIButton = {
-        let button = UIButton()
-        button.setTitle(Design.Text.moveBookmarkListButtonTitle, for: .normal)
-        button.setTitleColor(.label, for: .normal)
-        button.titleLabel?.font = .preferredFont(forTextStyle: .callout)
-        button.setImage(Design.Image.bookmarkButton, for: .normal)
-        button.tintColor = .systemYellow
-        button.layer.borderColor = Design.Color.border
-        button.layer.borderWidth = 1
-        
-        return button
-    }()
-    
     private let searchController: UISearchController = {
         let searchController = UISearchController()
         searchController.hidesNavigationBarDuringPresentation = false
@@ -118,6 +97,7 @@ class MovieSearchViewController: UIViewController {
     
     private func bindSearchBar() {
         searchController.searchBar.rx.text.orEmpty
+            .distinctUntilChanged()
             .withUnretained(self)
             .debounce(.milliseconds(500), scheduler: MainScheduler.instance)
             .subscribe(onNext: { (_, searchWord) in
@@ -136,20 +116,18 @@ class MovieSearchViewController: UIViewController {
                 destination.setupDetailView(with: movie)
             })
             .disposed(by: disposeBag)
+        
+        movieCollectionView.rx.didScroll
+            .withUnretained(self)
+            .subscribe(onNext: { (owner, _) in
+                owner.navigationItem.searchController?.searchBar.endEditing(true)
+            })
+            .disposed(by: disposeBag)
     }
     
     private func setupNavigationBar() {
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: viewTitleLable)
-        navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: bookmarkButton)
-        bookmarkButton.addTarget(self, action: #selector(presentBookmarkListView), for: .touchDown)
+        navigationItem.title = Design.Text.movieSearchViewTitle
         navigationItem.searchController = searchController
-    }
-    
-    @objc private func presentBookmarkListView() {
-        let destination = UINavigationController(rootViewController: BookmarkListViewController())
-        destination.view.backgroundColor = Design.Color.defaultBackground
-        destination.modalPresentationStyle = .fullScreen
-        present(destination, animated: true)
     }
 }
 
