@@ -27,7 +27,7 @@ final class BoxOfficeCell: UICollectionViewCell {
     
     let rankLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title3).bold
+        label.font = Design.Font.rankBadge
         label.textColor = .systemBackground
         label.textAlignment = .center
         
@@ -52,7 +52,7 @@ final class BoxOfficeCell: UICollectionViewCell {
     
     let rankChangeLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .callout)
+        label.font = Design.Font.rankChange
         label.textAlignment = .center
         
         return label
@@ -60,7 +60,7 @@ final class BoxOfficeCell: UICollectionViewCell {
     
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .title3).bold
+        label.font = Design.Font.boxOfficeMovieTtitle
         
         return label
     }()
@@ -99,8 +99,8 @@ final class BoxOfficeCell: UICollectionViewCell {
     
     private let newLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .callout).bold
-        label.text = "NEW"
+        label.font = Design.Font.boxOfficeNexBadgeTitle
+        label.text = Design.Text.boxOfficeNewBadgeTitle
         
         return label
     }()
@@ -126,18 +126,18 @@ final class BoxOfficeCell: UICollectionViewCell {
     
     private func setupRankChangeLabel(with changedRankValue: String) {
         if changedRankValue == "0" {
-            rankChangeSignImageView.image = UIImage(systemName: "minus")
+            rankChangeSignImageView.image = Design.Image.rankChangeNone
             rankChangeSignImageView.tintColor = .label
             rankChangeLabel.isHidden = true
         } else if changedRankValue.hasPrefix("-") {
             var value = changedRankValue
             value.removeFirst()
-            rankChangeSignImageView.image = UIImage(systemName: "arrowtriangle.down.fill")
+            rankChangeSignImageView.image = Design.Image.rankDecrease
             rankChangeSignImageView.tintColor = .systemBlue
             rankChangeLabel.textColor = .systemBlue
             rankChangeLabel.text = value
         } else {
-            rankChangeSignImageView.image = UIImage(systemName: "arrowtriangle.up.fill")
+            rankChangeSignImageView.image = Design.Image.rankIncrease
             rankChangeSignImageView.tintColor = .systemRed
             rankChangeLabel.textColor = .systemRed
             rankChangeLabel.text = changedRankValue
@@ -153,7 +153,7 @@ final class BoxOfficeCell: UICollectionViewCell {
     }
     
     private func setupAudienceLable(with movie: BoxOfficeMovie) {
-        audienceLabel.text = "\(movie.dailyAudience)명(전체: \(movie.totalAudience)명)"
+        audienceLabel.text = "\(movie.dailyAudience)명(누적: \(movie.totalAudience)명)"
     }
     
     private func hideNewBadge(with isNew: Bool) {
