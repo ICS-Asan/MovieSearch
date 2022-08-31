@@ -151,7 +151,7 @@ final class BoxOfficeCell: UICollectionViewCell {
     }
     
     private func setupAudienceLable(with movie: BoxOfficeMovie) {
-        audienceLabel.text = "\(movie.dailyAudience)명(누적: \(movie.totalAudience)명)"
+        audienceLabel.text = "\(movie.dailyAudience.addComma())명(누적: \(movie.totalAudience.addComma())명)"
     }
     
     private func hideNewBadge(with isNew: Bool) {

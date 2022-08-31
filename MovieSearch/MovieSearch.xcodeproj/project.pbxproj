@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		470C5B3128BF61B7007EAB0C /* BoxOfficeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470C5B3028BF61B7007EAB0C /* BoxOfficeCell.swift */; };
+		470C5B3328BF6AE0007EAB0C /* Int+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470C5B3228BF6AE0007EAB0C /* Int+extension.swift */; };
 		477A76DE286A13740028A292 /* MovieSearchUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76DD286A13740028A292 /* MovieSearchUseCase.swift */; };
 		477A76E0286A17630028A292 /* MovieSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76DF286A17630028A292 /* MovieSearchViewModel.swift */; };
 		477A76E2286A20210028A292 /* ViewModelDescribing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 477A76E1286A20210028A292 /* ViewModelDescribing.swift */; };
@@ -64,6 +65,7 @@
 
 /* Begin PBXFileReference section */
 		470C5B3028BF61B7007EAB0C /* BoxOfficeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoxOfficeCell.swift; sourceTree = "<group>"; };
+		470C5B3228BF6AE0007EAB0C /* Int+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+extension.swift"; sourceTree = "<group>"; };
 		477A76DD286A13740028A292 /* MovieSearchUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchUseCase.swift; sourceTree = "<group>"; };
 		477A76DF286A17630028A292 /* MovieSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieSearchViewModel.swift; sourceTree = "<group>"; };
 		477A76E1286A20210028A292 /* ViewModelDescribing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelDescribing.swift; sourceTree = "<group>"; };
@@ -257,6 +259,7 @@
 			children = (
 				479CD1BD28699A2800ABD0AB /* URLRequest+extension.swift */,
 				479CD1D62869CF1200ABD0AB /* UIFont+extension.swift */,
+				470C5B3228BF6AE0007EAB0C /* Int+extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -476,6 +479,7 @@
 				47895B9F286A4DFD0031DD91 /* MovieCoreDataDTO+CoreDataProperties.swift in Sources */,
 				47DFC5D128A2A101009397D8 /* ChartNetworkRepository.swift in Sources */,
 				479CD1C92869A33200ABD0AB /* NaverMovieNetworkRepository.swift in Sources */,
+				470C5B3328BF6AE0007EAB0C /* Int+extension.swift in Sources */,
 				47D7D259286B011F004D3F43 /* Design.swift in Sources */,
 				47EE0DF2286A7FF500846EE9 /* MovieDetailUseCase.swift in Sources */,
 				47DFC5CB28A145FF009397D8 /* BoxOfficeInformationDTO.swift in Sources */,
