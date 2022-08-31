@@ -8,7 +8,8 @@ struct BoxOfficeMovieDTO: Codable {
     let openDt: String
     let audiCnt, audiAcc: String
     
-    func toDomain() -> BoxOfficeMovie {
+    func toDomain() -> BoxOfficeMovie? {
+        guard let rank = Int(rank) else { return nil }
         return BoxOfficeMovie(
             rank: rank,
             changedRankValue: rankInten,

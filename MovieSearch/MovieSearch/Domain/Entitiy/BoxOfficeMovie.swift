@@ -1,7 +1,7 @@
 import Foundation
 
 struct BoxOfficeMovie: Hashable {
-    let rank: String
+    let rank: Int
     let changedRankValue: String
     let isNew: Bool
     let title: String
