@@ -124,23 +124,21 @@ final class BoxOfficeCell: UICollectionViewCell {
         hideNewBadge(with: movie.isNew)
     }
     
-    private func setupRankChangeLabel(with changedRankValue: String) {
-        if changedRankValue == "0" {
+    private func setupRankChangeLabel(with changedRankValue: Int) {
+        if changedRankValue == 0 {
             rankChangeSignImageView.image = Design.Image.rankChangeNone
             rankChangeSignImageView.tintColor = .label
             rankChangeLabel.isHidden = true
-        } else if changedRankValue.hasPrefix("-") {
-            var value = changedRankValue
-            value.removeFirst()
+        } else if changedRankValue < 0 {
             rankChangeSignImageView.image = Design.Image.rankDecrease
             rankChangeSignImageView.tintColor = .systemBlue
             rankChangeLabel.textColor = .systemBlue
-            rankChangeLabel.text = value
+            rankChangeLabel.text = changedRankValue.description
         } else {
             rankChangeSignImageView.image = Design.Image.rankIncrease
             rankChangeSignImageView.tintColor = .systemRed
             rankChangeLabel.textColor = .systemRed
-            rankChangeLabel.text = changedRankValue
+            rankChangeLabel.text = changedRankValue.description
         }
     }
     
