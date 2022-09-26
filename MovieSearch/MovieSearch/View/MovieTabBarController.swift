@@ -35,9 +35,9 @@ class MovieTabBarController: UITabBarController {
     
     private func setupTabBarItem() {
         boxOfficeNavigationController.tabBarItem = UITabBarItem(
-            title: "박스오피스",
-            image: UIImage(systemName: "chart.bar"),
-            selectedImage: UIImage(systemName: "chart.bar.fill")
+            title: Design.Text.boxOfficeViewTabBarTitle,
+            image: Design.Image.normalBoxOffice,
+            selectedImage: Design.Image.selectedBoxOffice
         )
         searchNavigationController.tabBarItem = UITabBarItem(
             title: Design.Text.searchViewTabBarTitle,

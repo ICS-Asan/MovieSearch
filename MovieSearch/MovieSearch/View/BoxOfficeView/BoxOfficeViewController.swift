@@ -27,7 +27,7 @@ class BoxOfficeViewController: UIViewController, View {
     }
     
     private func setupNavigationBar() {
-        navigationItem.title = "일간 박스오피스"
+        navigationItem.title = Design.Text.boxOfficeViewTitle
         navigationController?.navigationBar.prefersLargeTitles = true
     }
     

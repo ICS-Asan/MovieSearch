@@ -2,11 +2,13 @@ import UIKit
 
 enum Design {
     enum Text {
-        static let boxOfficeNewBadgeTitle = "NEW"
+        static let boxOfficeViewTabBarTitle = "박스오피스"
         static let searchViewTabBarTitle = "검색"
         static let bookmarkListViewTabBarTitle = "즐겨찾기"
+        static let boxOfficeViewTitle = "일간 박스오피스"
         static let movieSearchViewTitle = "영화 검색"
         static let bookmarkListViewTitle = "즐겨찾기 목록"
+        static let boxOfficeNewBadgeTitle = "NEW"
         static let directorTitle = "감독: "
         static let actorTitle = "출연: "
         static let userRatingTitle = "평점: "
@@ -33,6 +35,8 @@ enum Design {
     }
     
     enum Image {
+        static let normalBoxOffice = UIImage(systemName: "chart.bar")
+        static let selectedBoxOffice = UIImage(systemName: "chart.bar.fill")
         static let rankChangeNone = UIImage(systemName: "minus")
         static let rankIncrease = UIImage(systemName: "arrowtriangle.up.fill")
         static let rankDecrease = UIImage(systemName: "arrowtriangle.down.fill")
