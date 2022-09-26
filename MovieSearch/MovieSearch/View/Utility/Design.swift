@@ -2,6 +2,7 @@ import UIKit
 
 enum Design {
     enum Text {
+        static let boxOfficeNewBadgeTitle = "NEW"
         static let searchViewTabBarTitle = "검색"
         static let bookmarkListViewTabBarTitle = "즐겨찾기"
         static let movieSearchViewTitle = "영화 검색"
@@ -13,6 +14,10 @@ enum Design {
     }
     
     enum Font {
+        static let rankBadge = UIFont.preferredFont(forTextStyle: .title3).bold
+        static let rankChange = UIFont.preferredFont(forTextStyle: .callout)
+        static let boxOfficeMovieTtitle = UIFont.preferredFont(forTextStyle: .title3).bold
+        static let boxOfficeNexBadgeTitle = UIFont.preferredFont(forTextStyle: .callout).bold
         static let movieSearchViewTitle = UIFont.preferredFont(forTextStyle: .title2).bold
         static let movieInformationTitle = UIFont.preferredFont(forTextStyle: .body).bold
         static let movieInformation = UIFont.preferredFont(forTextStyle: .callout)
@@ -28,6 +33,9 @@ enum Design {
     }
     
     enum Image {
+        static let rankChangeNone = UIImage(systemName: "minus")
+        static let rankIncrease = UIImage(systemName: "arrowtriangle.up.fill")
+        static let rankDecrease = UIImage(systemName: "arrowtriangle.down.fill")
         static let search = UIImage(systemName: "magnifyingglass")
         static let normalBookmark = UIImage(systemName: "star")
         static let selectedbookmark = UIImage(systemName: "star.fill")

@@ -1,11 +1,11 @@
 import Foundation
 
 struct BoxOfficeMovie: Hashable {
-    let rank: String
-    let changedRankValue: String
+    let rank: Int
+    let changedRankValue: Int
     let isNew: Bool
     let title: String
     let openDate: String
-    let dailyAudience: String
-    let totalAudience: String
+    let dailyAudience: Int
+    let totalAudience: Int
 }

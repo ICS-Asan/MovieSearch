@@ -6,7 +6,7 @@ struct BoxOfficeInformationDTO: Codable {
     let dailyBoxOfficeList: [BoxOfficeMovieDTO]
     
     func toDomain() -> BoxOfficeInformation {
-        let movies = dailyBoxOfficeList.map { $0.toDomain() }
+        let movies = dailyBoxOfficeList.compactMap { $0.toDomain() }
         
         return BoxOfficeInformation(
             boxOfficeType: boxofficeType,
