@@ -1,6 +1,15 @@
 import UIKit
+import ReactorKit
 
 class MovieTabBarController: UITabBarController {
+    private let boxOfficeNavigationController: UINavigationController = {
+        let viewController = BoxOfficeViewController()
+        let navigationController = UINavigationController(rootViewController: viewController)
+        viewController.reactor = BoxOfficeViewReactor()
+        
+        return navigationController
+    }()
+    
     let searchNavigationController = UINavigationController(rootViewController: MovieSearchViewController())
     let bookmarkNavigationController = UINavigationController(rootViewController: BookmarkListViewController())
     
@@ -21,10 +30,15 @@ class MovieTabBarController: UITabBarController {
     }
     
     private func setupTabBarViews() {
-        setViewControllers([searchNavigationController, bookmarkNavigationController], animated: true)
+        setViewControllers([boxOfficeNavigationController, searchNavigationController, bookmarkNavigationController], animated: true)
     }
     
     private func setupTabBarItem() {
+        boxOfficeNavigationController.tabBarItem = UITabBarItem(
+            title: "박스오피스",
+            image: UIImage(systemName: "chart.bar"),
+            selectedImage: UIImage(systemName: "chart.bar.fill")
+        )
         searchNavigationController.tabBarItem = UITabBarItem(
             title: Design.Text.searchViewTabBarTitle,
             image: Design.Image.search,
