@@ -50,6 +50,10 @@ class BoxOfficeViewController: UIViewController, View {
                 self?.populate(movie: movies)
             })
             .disposed(by: disposeBag)
+        
+        boxOfficeCollectionView.rx.itemSelected.asDriver().drive(with: self, onNext: { [weak self] _, _ in
+            fatalError()
+        }).disposed(by: disposeBag)
     }
 }
 
